@@ -3,6 +3,7 @@ import 'package:auto_route/auto_route.dart';
 
 
 import '../../../ui/features/menu/menu_widget.dart';
+import '../../../ui/features/navigation/navigation_screen.dart';
 import '../../app/app.dart';
 import '../di/wrappers/user_scope_wrapper.dart';
 
@@ -26,9 +27,18 @@ class AppRouter extends _$AppRouter {
       page: UserWrapperRoute.page,
       children: [
         AutoRoute(
-          path: 'menu',
-          page: MenuRoute.page,
+          page: NavigationRoute.page,
+          path: '',
+          children: [
+            CustomRoute(
+              page: MenuRoute.page,
+              initial: true,
+              path: '',
+              transitionsBuilder: TransitionsBuilders.noTransition,
+            ),
+          ]
         ),
+        
       ],
     )
   ];
