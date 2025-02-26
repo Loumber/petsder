@@ -5,7 +5,8 @@ import 'package:petsder/common/utils/di/app_async_dependency.dart';
 import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../domain/overlay_bloc_state.dart';
+import '../../../../../domain/auth/auth_repository.dart';
+import '../../../../../domain/overlay_bloc/overlay_bloc_state.dart';
 import '../../../../../ui/widgets/common/overlay_notification_widget.dart';
 import '../../../../../ui/widgets/common/success_overlay_notification_widget.dart';
 
@@ -13,11 +14,15 @@ class UserInfoDependency extends AppAsyncDependency {
 
   late final StreamSubscription<OverlayBlocStates> _overlayBlocSteamSubscription;
 
+  late final AuthRepository authRepository;
+
   Timer? _statusFlowForRateOrderTimer;
 
 
   @override
   Future<void> initAsync(BuildContext context) async {
+    authRepository = AuthRepository();
+
     _initOverlayBlocSubscription(context);
   }
   

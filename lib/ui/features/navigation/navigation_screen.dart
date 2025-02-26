@@ -16,6 +16,7 @@ class NavigationScreen extends ElementaryWidget<INavigationWidgetModel> {
   return AutoTabsScaffold(
     routes: const [
       MenuRoute(),
+      AccountRoute()
     ],
     bottomNavigationBuilder: (context, router) {
       return Column(
@@ -29,6 +30,10 @@ class NavigationScreen extends ElementaryWidget<INavigationWidgetModel> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.person),
+                label: 'Account',
               ),
             ],
           ),

@@ -2,10 +2,14 @@ import 'package:auto_route/auto_route.dart';
 
 
 
+import '../../../ui/features/account/account_widget.dart';
+import '../../../ui/features/auth/login/login_widget.dart';
+import '../../../ui/features/auth/registration/registration_widget.dart';
 import '../../../ui/features/menu/menu_widget.dart';
 import '../../../ui/features/navigation/navigation_screen.dart';
 import '../../app/app.dart';
 import '../di/wrappers/user_scope_wrapper.dart';
+import 'auth_guards.dart';
 
 part 'app_router.gr.dart';
 
@@ -15,6 +19,8 @@ part 'app_router.gr.dart';
 )
 class AppRouter extends _$AppRouter {
   AppRouter() : super(navigatorKey: PetsderApp.navigatorGlobalKey);
+
+  final authGuard = AuthGuard();
 
   @override
   RouteType get defaultRouteType => const RouteType.cupertino();
@@ -28,6 +34,7 @@ class AppRouter extends _$AppRouter {
       children: [
         AutoRoute(
           page: NavigationRoute.page,
+          guards: [authGuard],
           path: '',
           children: [
             CustomRoute(
@@ -36,9 +43,21 @@ class AppRouter extends _$AppRouter {
               path: '',
               transitionsBuilder: TransitionsBuilders.noTransition,
             ),
+            CustomRoute(
+              page: AccountRoute.page,
+              path: 'account',
+              transitionsBuilder: TransitionsBuilders.noTransition,
+            ),
           ]
         ),
-        
+        AutoRoute(
+          page: LoginRoute.page,
+          path: 'login',
+        ),
+        AutoRoute(
+          page: RegistrationRoute.page,
+          path: 'registration',
+        ),
       ],
     )
   ];

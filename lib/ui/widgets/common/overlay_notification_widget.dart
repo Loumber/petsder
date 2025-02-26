@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:petsder/common/utils/extensions/buildcontext_extensions.dart';
 
-import '../../../common/utils/extensions/buildcontext_extensions.dart';
 
 class OverlayNotification extends StatefulWidget {
   const OverlayNotification({
@@ -67,19 +67,19 @@ class _OverlayNotificationState extends State<OverlayNotification> with TickerPr
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Container(
                 width: MediaQuery.of(context).size.width - 32,
-                decoration: const BoxDecoration(
-                  borderRadius:  BorderRadius.all(Radius.circular(8)),
-                  //color: context.theme.main.primary,
+                decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  color: context.theme.main.error,
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(10),
-                  /*child: DefaultTextStyle(
-                    style: context.theme.t1.copyWith(color: context.theme.main.primaryButtonTextColor),*/
+                  child: DefaultTextStyle(
+                    style: TextStyle(color: context.theme.main.onPrimary),
                     child: SizedBox(
                       width: double.infinity,
                       child: Center(child: widget.notificationWidget),
                     ),
-                  //),
+                  ),
                 ),
               ),
             ),

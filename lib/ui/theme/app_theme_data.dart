@@ -2,6 +2,37 @@ part of 'theme.dart';
 
 ThemeData materialThemeFromAppTheme(AppThemeData theme, Brightness brightness) {
   return ThemeData(
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+        backgroundColor: theme.main.primary,
+      ),
+    ),
+    dividerColor: theme.main.divider,
+    textTheme: TextTheme(
+      bodyLarge: TextStyle(color: theme.main.inputFieldLabelColor),
+    ),
+    inputDecorationTheme: InputDecorationTheme(
+      floatingLabelBehavior: FloatingLabelBehavior.never,
+      filled: true,
+      fillColor: theme.main.inputFieldBackgroundColor,
+      hintStyle: TextStyle(color: theme.main.inputFieldLabelColor),
+
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide:  BorderSide(color: theme.main.inputFieldBorderColor),
+      ),
+      enabledBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide:  BorderSide(color: theme.main.inputFieldBorderColor),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide:  BorderSide(color: theme.main.inputFieldBorderColor),
+      ),
+      labelStyle: TextStyle(color: theme.main.inputFieldLabelColor),
+
+    ),
     useMaterial3: true,
     /*colorScheme: ColorScheme(
         brightness: brightness,

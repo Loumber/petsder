@@ -4,7 +4,7 @@ import 'package:petsder/common/utils/di/app_async_dependency.dart';
 import 'package:petsder/common/utils/navigation/app_router.dart';
 import 'package:provider/provider.dart';
 
-import '../../../../../domain/overlay_bloc.dart';
+import '../../../../../domain/overlay_bloc/overlay_bloc.dart';
 import '../../../../../ui/theme/theme.dart';
 
 class GlobalDependency extends AppAsyncDependency {
