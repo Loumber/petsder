@@ -1,15 +1,20 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:petsder/ui/widgets/buttons/app_button.dart';
 
+import '../../../../data/models/enums/auth_state.dart';
 import '../widgets/google_button.dart';
 import 'login_wm.dart';
 
-@RoutePage()
+
 class LoginScreen extends ElementaryWidget<ILoginWidgetModel> {
-  const LoginScreen({super.key}) : super(defaultLoginWidgetModelFactory);
+  const LoginScreen({
+    super.key,
+    required this.state,
+  }) : super(defaultLoginWidgetModelFactory);
+
+  final ValueNotifier<AuthState> state;
 
   @override
   Widget build(ILoginWidgetModel wm) {

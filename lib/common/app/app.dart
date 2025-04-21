@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 
 import '../../ui/theme/app_theme.dart';
 import '../../ui/theme/theme.dart';
@@ -38,6 +40,16 @@ class _PetsderAppState extends State<PetsderApp> {
           debugShowCheckedModeBanner: false,
           routerDelegate: global.router.delegate(),
           routeInformationParser: global.router.defaultRouteParser(),
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: const [
+            Locale('en', 'US'),
+            Locale('ru', 'RU'),
+          ],
+          locale: const Locale('ru', 'RU'),
         )
       ),
     );

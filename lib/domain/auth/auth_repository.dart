@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -6,6 +7,12 @@ class AuthRepository {
   Future<void> signUpEmailPassword(String email, String password ) async {
     try{
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password);
+
+      await FirebaseFirestore.instance.collection('users').doc(FirebaseAuth.instance.currentUser!.uid).set({
+        'email': email, 
+        'password': password,
+        'pets' : []
+      });
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(e, stackTrace);
     }

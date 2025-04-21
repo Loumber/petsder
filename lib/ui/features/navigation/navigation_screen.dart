@@ -16,13 +16,13 @@ class NavigationScreen extends ElementaryWidget<INavigationWidgetModel> {
   return AutoTabsScaffold(
     routes: const [
       MenuRoute(),
+      LikesRoute(),
       AccountRoute()
     ],
     bottomNavigationBuilder: (context, router) {
       return Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Placeholder(),
           BottomNavigationBar(
             currentIndex: router.activeIndex,
             onTap: router.setActiveIndex,
@@ -30,6 +30,10 @@ class NavigationScreen extends ElementaryWidget<INavigationWidgetModel> {
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
                 label: 'Home',
+              ),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.heat_pump_rounded),
+                label: 'Like',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.person),

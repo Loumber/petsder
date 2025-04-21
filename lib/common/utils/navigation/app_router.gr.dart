@@ -21,10 +21,22 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AccountScreen(),
       );
     },
-    LoginRoute.name: (routeData) {
+    AddPetRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LoginScreen(),
+        child: const AddPetScreen(),
+      );
+    },
+    AuthRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const AuthScreen(),
+      );
+    },
+    LikesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const LikesScreen(),
       );
     },
     MenuRoute.name: (routeData) {
@@ -37,12 +49,6 @@ abstract class _$AppRouter extends RootStackRouter {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const NavigationScreen(),
-      );
-    },
-    RegistrationRoute.name: (routeData) {
-      return AutoRoutePage<dynamic>(
-        routeData: routeData,
-        child: const RegistrationScreen(),
       );
     },
     UserWrapperRoute.name: (routeData) {
@@ -69,15 +75,43 @@ class AccountRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LoginScreen]
-class LoginRoute extends PageRouteInfo<void> {
-  const LoginRoute({List<PageRouteInfo>? children})
+/// [AddPetScreen]
+class AddPetRoute extends PageRouteInfo<void> {
+  const AddPetRoute({List<PageRouteInfo>? children})
       : super(
-          LoginRoute.name,
+          AddPetRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'LoginRoute';
+  static const String name = 'AddPetRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [AuthScreen]
+class AuthRoute extends PageRouteInfo<void> {
+  const AuthRoute({List<PageRouteInfo>? children})
+      : super(
+          AuthRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'AuthRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [LikesScreen]
+class LikesRoute extends PageRouteInfo<void> {
+  const LikesRoute({List<PageRouteInfo>? children})
+      : super(
+          LikesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'LikesRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -106,20 +140,6 @@ class NavigationRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'NavigationRoute';
-
-  static const PageInfo<void> page = PageInfo<void>(name);
-}
-
-/// generated route for
-/// [RegistrationScreen]
-class RegistrationRoute extends PageRouteInfo<void> {
-  const RegistrationRoute({List<PageRouteInfo>? children})
-      : super(
-          RegistrationRoute.name,
-          initialChildren: children,
-        );
-
-  static const String name = 'RegistrationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

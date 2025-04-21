@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
-
-import '../logger/logger.dart';
 
 class RestartWidget extends StatefulWidget {
   const RestartWidget({

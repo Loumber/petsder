@@ -1,10 +1,9 @@
 import 'package:auto_route/auto_route.dart';
-
-
+import 'package:petsder/ui/features/likes/likes_widget.dart';
 
 import '../../../ui/features/account/account_widget.dart';
-import '../../../ui/features/auth/login/login_widget.dart';
-import '../../../ui/features/auth/registration/registration_widget.dart';
+import '../../../ui/features/add_pet/add_pet_widget.dart';
+import '../../../ui/features/auth/auth_widget.dart';
 import '../../../ui/features/menu/menu_widget.dart';
 import '../../../ui/features/navigation/navigation_screen.dart';
 import '../../app/app.dart';
@@ -44,6 +43,11 @@ class AppRouter extends _$AppRouter {
               transitionsBuilder: TransitionsBuilders.noTransition,
             ),
             CustomRoute(
+              page: LikesRoute.page,
+              path: 'likes',
+              transitionsBuilder: TransitionsBuilders.noTransition,
+            ),
+            CustomRoute(
               page: AccountRoute.page,
               path: 'account',
               transitionsBuilder: TransitionsBuilders.noTransition,
@@ -51,13 +55,13 @@ class AppRouter extends _$AppRouter {
           ]
         ),
         AutoRoute(
-          page: LoginRoute.page,
+          page: AuthRoute.page, 
           path: 'login',
         ),
         AutoRoute(
-          page: RegistrationRoute.page,
-          path: 'registration',
-        ),
+          page: AddPetRoute.page,
+          path: 'add-pet',
+        )
       ],
     )
   ];

@@ -14,7 +14,7 @@ class MenuScreen extends ElementaryWidget<IMenuScreenWidgetModel> {
   Widget build(IMenuScreenWidgetModel wm) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('ХУй'),
+        title: const Text(''),
       ),
       body: const Center(
         child: Column(

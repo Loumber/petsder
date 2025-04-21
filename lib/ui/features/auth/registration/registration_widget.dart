@@ -1,22 +1,25 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:elementary/elementary.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:petsder/ui/widgets/buttons/app_button.dart';
 
+import '../../../../data/models/enums/auth_state.dart';
 import 'registration_wm.dart';
 
 
-@RoutePage()
 class RegistrationScreen extends ElementaryWidget<IRegistrationWidgetModel> {
   const RegistrationScreen({
+    required this.state,
     super.key
   }):super(defaultRegistrationWidgetModelFactory);
+
+  final ValueNotifier<AuthState> state;
 
   @override
   Widget build(IRegistrationWidgetModel wm) {
     return SafeArea(
       child: Scaffold(
+        resizeToAvoidBottomInset: false,
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [

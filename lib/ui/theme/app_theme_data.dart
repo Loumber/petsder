@@ -47,16 +47,30 @@ ThemeData materialThemeFromAppTheme(AppThemeData theme, Brightness brightness) {
       ),*/
     scaffoldBackgroundColor: theme.main.scaffoldBackgroundColor,
     appBarTheme: AppBarTheme(
-        centerTitle: true,
-        //titleTextStyle: theme.textTheme.headlineMedium,
-        //actionsIconTheme: IconThemeData(color: theme.main.onBackground),
-        //iconTheme: IconThemeData(color: theme.main.onBackground),
-        elevation: 4,
-        //foregroundColor: Colors.white,
-        backgroundColor: theme.main.appBarBackgroundColor,
-        //surfaceTintColor: theme.main.background,
-        //shadowColor: theme.main.futter.withOpacity(0.5),
+      centerTitle: true,
+      titleTextStyle: TextStyle(color: theme.main.onPrimary),
+      //actionsIconTheme: IconThemeData(color: theme.main.onBackground),
+      //iconTheme: IconThemeData(color: theme.main.onBackground),
+      elevation: 4,
+      //foregroundColor: Colors.white,
+      backgroundColor: theme.main.appBarBackgroundColor,
+      //surfaceTintColor: theme.main.background,
+      //shadowColor: theme.main.futter.withOpacity(0.5),
+    ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      textStyle:  TextStyle(fontSize: 16, color: theme.main.inputFieldLabelColor),
+      menuStyle: MenuStyle(
+        backgroundColor: WidgetStateProperty.all(theme.main.inputFieldBackgroundColor),
       ),
+      inputDecorationTheme: InputDecorationTheme(
+      border: OutlineInputBorder(
+        borderRadius: BorderRadius.circular(16),
+        borderSide: BorderSide(color: theme.main.inputFieldBorderColor),
+      ),
+      filled: true,
+      fillColor: theme.main.inputFieldBackgroundColor,
+    ),
+    )
   );
 } 
 

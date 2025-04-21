@@ -1,0 +1,2 @@
+C:/Users/maxim/git/petsder/android/app/.cxx/Debug/h73604z3/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/maxim/git/petsder/android/app/.cxx/Debug/h73604z3/arm64-v8a/CMakeFiles/rebuild_cache.dir

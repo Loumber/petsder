@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:petsder/common/utils/di/app_async_dependency.dart';
 import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
+import 'package:petsder/domain/pet/pet_repository.dart';
+import 'package:petsder/domain/user/user_controller.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../../domain/auth/auth_repository.dart';
@@ -16,12 +18,19 @@ class UserInfoDependency extends AppAsyncDependency {
 
   late final AuthRepository authRepository;
 
+  late final PetRepository petRepository;
+
   Timer? _statusFlowForRateOrderTimer;
+
+  late final UserController userController;
 
 
   @override
   Future<void> initAsync(BuildContext context) async {
     authRepository = AuthRepository();
+    petRepository = PetRepository();
+    await petRepository.getCurrentPet();
+    userController = UserController(currentPetNotifier:  petRepository.currentPetNotifier);
 
     _initOverlayBlocSubscription(context);
   }

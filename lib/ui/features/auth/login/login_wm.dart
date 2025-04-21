@@ -1,4 +1,3 @@
-import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:elementary/elementary.dart';
 import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
@@ -6,7 +5,7 @@ import 'package:petsder/common/utils/di/scopes/user_info/user_info_scope.dart';
 import 'package:petsder/common/utils/extensions/widget_model_extensions.dart';
 import 'package:petsder/ui/features/auth/login/login_widget.dart';
 
-import '../../../../common/utils/navigation/app_router.dart';
+import '../../../../data/models/enums/auth_state.dart';
 import '../../../theme/theme.dart';
 import 'login_model.dart';
 
@@ -57,7 +56,7 @@ class LoginWidgetModel extends WidgetModel<LoginScreen, ILoginModel>
 
   @override
   void onRegistrantionTap() {
-    context.router.push(const RegistrationRoute());
+    widget.state.value = AuthState.signUp;
   }
 
   @override

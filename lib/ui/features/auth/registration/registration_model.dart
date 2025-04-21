@@ -25,8 +25,8 @@ class RegistrationModel extends IRegistrationModel {
   @override 
   Future<void> signUp(String email, String password) async {
     try {
-      final res = _authRepository.signUpEmailPassword(email, password);
-      return res;
+      _authRepository.signUpEmailPassword(email, password);
+      
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(e, stackTrace);
     }

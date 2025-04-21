@@ -27,8 +27,7 @@ class LoginModel extends ILoginModel {
   @override
   Future<void> login(String email, String password) async {
     try {
-      final res = await _authRepository.loginEmailPassword(email, password);
-      return res;
+      await _authRepository.loginEmailPassword(email, password);
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(e, stackTrace);
     }
@@ -37,8 +36,7 @@ class LoginModel extends ILoginModel {
   @override
   Future<void> loginWithGoogle() async {
     try {
-      final res = await _authRepository.signInWithGoogle();
-      return res;
+      await _authRepository.signInWithGoogle();
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(e, stackTrace);
     }
