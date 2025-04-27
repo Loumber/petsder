@@ -33,6 +33,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const AuthScreen(),
       );
     },
+    EditPetRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const EditPetScreen(),
+      );
+    },
     LikesRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -98,6 +104,20 @@ class AuthRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'AuthRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [EditPetScreen]
+class EditPetRoute extends PageRouteInfo<void> {
+  const EditPetRoute({List<PageRouteInfo>? children})
+      : super(
+          EditPetRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'EditPetRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

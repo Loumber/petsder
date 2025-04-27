@@ -14,7 +14,7 @@ import '../../../../../ui/widgets/common/success_overlay_notification_widget.dar
 
 class UserInfoDependency extends AppAsyncDependency {
 
-  late final StreamSubscription<OverlayBlocStates> _overlayBlocSteamSubscription;
+  late final StreamSubscription<OverlayBlocStates>? _overlayBlocSteamSubscription;
 
   late final AuthRepository authRepository;
 
@@ -27,21 +27,22 @@ class UserInfoDependency extends AppAsyncDependency {
 
   @override
   Future<void> initAsync(BuildContext context) async {
+    await _initOverlayBlocSubscription(context);
     authRepository = AuthRepository();
     petRepository = PetRepository();
     await petRepository.getCurrentPet();
     userController = UserController(currentPetNotifier:  petRepository.currentPetNotifier);
-
-    _initOverlayBlocSubscription(context);
   }
   
   @override
   Future<void> onError(BuildContext context) async {
-    await _overlayBlocSteamSubscription.cancel();
+    await _overlayBlocSteamSubscription?.cancel();
     _statusFlowForRateOrderTimer?.cancel();
   }
 
-  void _initOverlayBlocSubscription(BuildContext context) {
+  Future<void> updateCurrentPet() async => userController.currentPetNotifier.value = petRepository.currentPetNotifier.value;
+
+  Future<void> _initOverlayBlocSubscription(BuildContext context) async {
     final overlay = Overlay.of(context);
     _overlayBlocSteamSubscription = context.global.overlayBloc.stream.listen((state) {
       onOverlayBlocEvent(state, overlay);

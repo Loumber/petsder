@@ -8,6 +8,7 @@ part of 'pet_response.dart';
 
 _$PetResponseImpl _$$PetResponseImplFromJson(Map<String, dynamic> json) =>
     _$PetResponseImpl(
+      id: json['id'] as String,
       age: json['age'] as String,
       breed: json['breed'] as String,
       description: json['description'] as String,
@@ -20,6 +21,7 @@ _$PetResponseImpl _$$PetResponseImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$PetResponseImplToJson(_$PetResponseImpl instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'age': instance.age,
       'breed': instance.breed,
       'description': instance.description,

@@ -151,4 +151,15 @@ class PetRepository {
     }
     return pets;
   }
+
+  Future<void> editPetName(String name) async {
+    if (FirebaseAuth.instance.currentUser == null) return;
+
+    if(_currentPetNotifier.value == null) return;
+    final pId = _currentPetNotifier.value!.id;
+
+    final petRef = await FirebaseFirestore.instance.collection('pets').doc(pId);
+
+    await petRef.update({'name': name});
+  }
 }

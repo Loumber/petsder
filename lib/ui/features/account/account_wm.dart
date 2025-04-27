@@ -23,6 +23,8 @@ abstract interface class IAccountWidgetModel implements IWidgetModel {
   Future<void> onSignOutTap();
 
   Future<void> onChangePasswordTap();
+
+  void onEditPetTap();
   
   bool isCurrent(int index);
 
@@ -130,5 +132,8 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
     );
   }
 
-  
+  @override 
+  Future<void> onEditPetTap() async {
+    await context.router.push(const EditPetRoute());
+  }
 }

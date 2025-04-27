@@ -1,4 +1,5 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:petsder/ui/features/edit_pet/edit_pet_widget.dart';
 import 'package:petsder/ui/features/likes/likes_widget.dart';
 
 import '../../../ui/features/account/account_widget.dart';
@@ -11,7 +12,6 @@ import '../di/wrappers/user_scope_wrapper.dart';
 import 'auth_guards.dart';
 
 part 'app_router.gr.dart';
-
 
 @AutoRouterConfig(
   replaceInRouteName: 'Page|Screen,Route',
@@ -26,44 +26,46 @@ class AppRouter extends _$AppRouter {
 
   @override
   List<AutoRoute> get routes => <AutoRoute>[
-    AutoRoute(
-      path: '/',
-      initial: true,
-      page: UserWrapperRoute.page,
-      children: [
         AutoRoute(
-          page: NavigationRoute.page,
-          guards: [authGuard],
-          path: '',
+          path: '/',
+          initial: true,
+          page: UserWrapperRoute.page,
           children: [
-            CustomRoute(
-              page: MenuRoute.page,
-              initial: true,
-              path: '',
-              transitionsBuilder: TransitionsBuilders.noTransition,
+            AutoRoute(
+                page: NavigationRoute.page,
+                guards: [authGuard],
+                path: '',
+                children: [
+                  CustomRoute(
+                    page: MenuRoute.page,
+                    initial: true,
+                    path: '',
+                    transitionsBuilder: TransitionsBuilders.noTransition,
+                  ),
+                  CustomRoute(
+                    page: LikesRoute.page,
+                    path: 'likes',
+                    transitionsBuilder: TransitionsBuilders.noTransition,
+                  ),
+                  CustomRoute(
+                    page: AccountRoute.page,
+                    path: 'account',
+                    transitionsBuilder: TransitionsBuilders.noTransition,
+                  ),
+                ]),
+            AutoRoute(
+              page: EditPetRoute.page,
+              path: 'edit-pet',
             ),
-            CustomRoute(
-              page: LikesRoute.page,
-              path: 'likes',
-              transitionsBuilder: TransitionsBuilders.noTransition,
+            AutoRoute(
+              page: AuthRoute.page,
+              path: 'login',
             ),
-            CustomRoute(
-              page: AccountRoute.page,
-              path: 'account',
-              transitionsBuilder: TransitionsBuilders.noTransition,
-            ),
-          ]
-        ),
-        AutoRoute(
-          page: AuthRoute.page, 
-          path: 'login',
-        ),
-        AutoRoute(
-          page: AddPetRoute.page,
-          path: 'add-pet',
+            AutoRoute(
+              page: AddPetRoute.page,
+              path: 'add-pet',
+            )
+          ],
         )
-      ],
-    )
-  ];
-
+      ];
 }

@@ -6,6 +6,7 @@ part 'pet_response.g.dart';
 @freezed
 class PetResponse with _$PetResponse {
   factory PetResponse({
+    required String id,
     required String age,
     required String breed,
     required String description,

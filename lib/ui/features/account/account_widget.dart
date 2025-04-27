@@ -65,11 +65,14 @@ class AccountScreen extends ElementaryWidget<IAccountWidgetModel> {
                           right: 24,
                           bottom: 16,
                         ),
-                        child: PetCard(
-                          name: currnetPet!.name,
-                          petPhotos: currnetPet.photos,
-                          discription: currnetPet.description,
-                          age: currnetPet.age,
+                        child: GestureDetector(
+                          onTap: wm.onEditPetTap,
+                          child: PetCard(
+                            name: currnetPet!.name,
+                            petPhotos: currnetPet.photos,
+                            discription: currnetPet.description,
+                            age: currnetPet.age,
+                          ),
                         ),
                       )
                     ),

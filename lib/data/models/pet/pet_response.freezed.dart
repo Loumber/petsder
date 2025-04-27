@@ -20,6 +20,7 @@ PetResponse _$PetResponseFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$PetResponse {
+  String get id => throw _privateConstructorUsedError;
   String get age => throw _privateConstructorUsedError;
   String get breed => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
@@ -45,7 +46,8 @@ abstract class $PetResponseCopyWith<$Res> {
       _$PetResponseCopyWithImpl<$Res, PetResponse>;
   @useResult
   $Res call(
-      {String age,
+      {String id,
+      String age,
       String breed,
       String description,
       String gender,
@@ -69,6 +71,7 @@ class _$PetResponseCopyWithImpl<$Res, $Val extends PetResponse>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? age = null,
     Object? breed = null,
     Object? description = null,
@@ -78,6 +81,10 @@ class _$PetResponseCopyWithImpl<$Res, $Val extends PetResponse>
     Object? type = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       age: null == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
@@ -119,7 +126,8 @@ abstract class _$$PetResponseImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String age,
+      {String id,
+      String age,
       String breed,
       String description,
       String gender,
@@ -141,6 +149,7 @@ class __$$PetResponseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? age = null,
     Object? breed = null,
     Object? description = null,
@@ -150,6 +159,10 @@ class __$$PetResponseImplCopyWithImpl<$Res>
     Object? type = null,
   }) {
     return _then(_$PetResponseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       age: null == age
           ? _value.age
           : age // ignore: cast_nullable_to_non_nullable
@@ -186,7 +199,8 @@ class __$$PetResponseImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$PetResponseImpl implements _PetResponse {
   _$PetResponseImpl(
-      {required this.age,
+      {required this.id,
+      required this.age,
       required this.breed,
       required this.description,
       required this.gender,
@@ -198,6 +212,8 @@ class _$PetResponseImpl implements _PetResponse {
   factory _$PetResponseImpl.fromJson(Map<String, dynamic> json) =>
       _$$PetResponseImplFromJson(json);
 
+  @override
+  final String id;
   @override
   final String age;
   @override
@@ -221,7 +237,7 @@ class _$PetResponseImpl implements _PetResponse {
 
   @override
   String toString() {
-    return 'PetResponse(age: $age, breed: $breed, description: $description, gender: $gender, name: $name, photos: $photos, type: $type)';
+    return 'PetResponse(id: $id, age: $age, breed: $breed, description: $description, gender: $gender, name: $name, photos: $photos, type: $type)';
   }
 
   @override
@@ -229,6 +245,7 @@ class _$PetResponseImpl implements _PetResponse {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$PetResponseImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.age, age) || other.age == age) &&
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.description, description) ||
@@ -241,8 +258,8 @@ class _$PetResponseImpl implements _PetResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, age, breed, description, gender,
-      name, const DeepCollectionEquality().hash(_photos), type);
+  int get hashCode => Object.hash(runtimeType, id, age, breed, description,
+      gender, name, const DeepCollectionEquality().hash(_photos), type);
 
   /// Create a copy of PetResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -262,7 +279,8 @@ class _$PetResponseImpl implements _PetResponse {
 
 abstract class _PetResponse implements PetResponse {
   factory _PetResponse(
-      {required final String age,
+      {required final String id,
+      required final String age,
       required final String breed,
       required final String description,
       required final String gender,
@@ -273,6 +291,8 @@ abstract class _PetResponse implements PetResponse {
   factory _PetResponse.fromJson(Map<String, dynamic> json) =
       _$PetResponseImpl.fromJson;
 
+  @override
+  String get id;
   @override
   String get age;
   @override
