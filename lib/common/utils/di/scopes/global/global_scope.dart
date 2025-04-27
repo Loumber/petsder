@@ -3,6 +3,7 @@ import 'package:flutter/scheduler.dart';
 import 'package:petsder/common/utils/di/app_async_dependency.dart';
 import 'package:petsder/common/utils/navigation/app_router.dart';
 import 'package:petsder/domain/animal/animal_repository.dart';
+import 'package:petsder/domain/geolocation/geolocation_repository.dart';
 import 'package:petsder/domain/pet/pet_repository.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,8 @@ class GlobalDependency extends AppAsyncDependency {
 
   late final AnimalRepository animalRepository;
 
+  late final GeolocationRepository geolocationRepository;
+
   late final PetRepository petRepository;
 
   @override
@@ -30,6 +33,10 @@ class GlobalDependency extends AppAsyncDependency {
     overlayBloc = OverlayBloc();
 
     animalRepository = AnimalRepository();
+
+    geolocationRepository = GeolocationRepository();
+
+    final ada = geolocationRepository.getCurrentPosition();
 
     petRepository = PetRepository();
   }
