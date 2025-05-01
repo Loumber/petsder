@@ -14,10 +14,10 @@ class NavigationScreen extends ElementaryWidget<INavigationWidgetModel> {
   @override
   Widget build(INavigationWidgetModel wm) {
   return AutoTabsScaffold(
-    routes: const [
+    routes:  [
       MenuRoute(),
-      LikesRoute(),
-      AccountRoute()
+      const LikesRoute(),
+      const AccountRoute()
     ],
     bottomNavigationBuilder: (context, router) {
       return Column(

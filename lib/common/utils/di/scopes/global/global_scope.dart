@@ -24,8 +24,6 @@ class GlobalDependency extends AppAsyncDependency {
 
   late final GeolocationRepository geolocationRepository;
 
-  late final PetRepository petRepository;
-
   @override
   Future<void> initAsync(BuildContext context) async {
     router = AppRouter();
@@ -35,10 +33,6 @@ class GlobalDependency extends AppAsyncDependency {
     animalRepository = AnimalRepository();
 
     geolocationRepository = GeolocationRepository();
-
-    final ada = geolocationRepository.getCurrentPosition();
-
-    petRepository = PetRepository();
   }
 
   @override

@@ -36,7 +36,7 @@ abstract interface class IAccountWidgetModel implements IWidgetModel {
 }
 
 AccountWidgetModel defaultAccountWidgetModelFactory(BuildContext context) {
-  return AccountWidgetModel(AccountModel(context.global.petRepository, context.user.userController, context.global.overlayBloc));
+  return AccountWidgetModel(AccountModel(context.user.petRepository, context.user.userController, context.global.overlayBloc));
 }
 
 class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> implements IAccountWidgetModel {

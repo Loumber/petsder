@@ -46,9 +46,11 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     MenuRoute.name: (routeData) {
+      final args =
+          routeData.argsAs<MenuRouteArgs>(orElse: () => const MenuRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MenuScreen(),
+        child: MenuScreen(key: args.key),
       );
     },
     NavigationRoute.name: (routeData) {
@@ -138,16 +140,30 @@ class LikesRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MenuScreen]
-class MenuRoute extends PageRouteInfo<void> {
-  const MenuRoute({List<PageRouteInfo>? children})
-      : super(
+class MenuRoute extends PageRouteInfo<MenuRouteArgs> {
+  MenuRoute({
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           MenuRoute.name,
+          args: MenuRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'MenuRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<MenuRouteArgs> page = PageInfo<MenuRouteArgs>(name);
+}
+
+class MenuRouteArgs {
+  const MenuRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'MenuRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

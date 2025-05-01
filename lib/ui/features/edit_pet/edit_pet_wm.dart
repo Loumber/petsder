@@ -29,7 +29,7 @@ abstract interface class IEditPetWidgetModel implements IWidgetModel {
 }
 
 EditPetWidgetModel defaultEditPetWidgetModelFactory(BuildContext context) {
-  return EditPetWidgetModel(EditPetModel(context.user.userController, context.global.petRepository, context.global.overlayBloc));
+  return EditPetWidgetModel(EditPetModel(context.user.userController, context.user.petRepository, context.global.overlayBloc));
 }
 
 class EditPetWidgetModel extends WidgetModel<EditPetScreen, IEditPetModel> implements IEditPetWidgetModel {

@@ -24,6 +24,8 @@ mixin _$PetResponse {
   String get age => throw _privateConstructorUsedError;
   String get breed => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String get geohash => throw _privateConstructorUsedError;
+  String get ownerId => throw _privateConstructorUsedError;
   String get gender => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   List<String> get photos => throw _privateConstructorUsedError;
@@ -50,6 +52,8 @@ abstract class $PetResponseCopyWith<$Res> {
       String age,
       String breed,
       String description,
+      String geohash,
+      String ownerId,
       String gender,
       String name,
       List<String> photos,
@@ -75,6 +79,8 @@ class _$PetResponseCopyWithImpl<$Res, $Val extends PetResponse>
     Object? age = null,
     Object? breed = null,
     Object? description = null,
+    Object? geohash = null,
+    Object? ownerId = null,
     Object? gender = null,
     Object? name = null,
     Object? photos = null,
@@ -96,6 +102,14 @@ class _$PetResponseCopyWithImpl<$Res, $Val extends PetResponse>
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      geohash: null == geohash
+          ? _value.geohash
+          : geohash // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       gender: null == gender
           ? _value.gender
@@ -130,6 +144,8 @@ abstract class _$$PetResponseImplCopyWith<$Res>
       String age,
       String breed,
       String description,
+      String geohash,
+      String ownerId,
       String gender,
       String name,
       List<String> photos,
@@ -153,6 +169,8 @@ class __$$PetResponseImplCopyWithImpl<$Res>
     Object? age = null,
     Object? breed = null,
     Object? description = null,
+    Object? geohash = null,
+    Object? ownerId = null,
     Object? gender = null,
     Object? name = null,
     Object? photos = null,
@@ -174,6 +192,14 @@ class __$$PetResponseImplCopyWithImpl<$Res>
       description: null == description
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      geohash: null == geohash
+          ? _value.geohash
+          : geohash // ignore: cast_nullable_to_non_nullable
+              as String,
+      ownerId: null == ownerId
+          ? _value.ownerId
+          : ownerId // ignore: cast_nullable_to_non_nullable
               as String,
       gender: null == gender
           ? _value.gender
@@ -203,6 +229,8 @@ class _$PetResponseImpl implements _PetResponse {
       required this.age,
       required this.breed,
       required this.description,
+      required this.geohash,
+      required this.ownerId,
       required this.gender,
       required this.name,
       required final List<String> photos,
@@ -221,6 +249,10 @@ class _$PetResponseImpl implements _PetResponse {
   @override
   final String description;
   @override
+  final String geohash;
+  @override
+  final String ownerId;
+  @override
   final String gender;
   @override
   final String name;
@@ -237,7 +269,7 @@ class _$PetResponseImpl implements _PetResponse {
 
   @override
   String toString() {
-    return 'PetResponse(id: $id, age: $age, breed: $breed, description: $description, gender: $gender, name: $name, photos: $photos, type: $type)';
+    return 'PetResponse(id: $id, age: $age, breed: $breed, description: $description, geohash: $geohash, ownerId: $ownerId, gender: $gender, name: $name, photos: $photos, type: $type)';
   }
 
   @override
@@ -250,6 +282,8 @@ class _$PetResponseImpl implements _PetResponse {
             (identical(other.breed, breed) || other.breed == breed) &&
             (identical(other.description, description) ||
                 other.description == description) &&
+            (identical(other.geohash, geohash) || other.geohash == geohash) &&
+            (identical(other.ownerId, ownerId) || other.ownerId == ownerId) &&
             (identical(other.gender, gender) || other.gender == gender) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality().equals(other._photos, _photos) &&
@@ -258,8 +292,18 @@ class _$PetResponseImpl implements _PetResponse {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, id, age, breed, description,
-      gender, name, const DeepCollectionEquality().hash(_photos), type);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      age,
+      breed,
+      description,
+      geohash,
+      ownerId,
+      gender,
+      name,
+      const DeepCollectionEquality().hash(_photos),
+      type);
 
   /// Create a copy of PetResponse
   /// with the given fields replaced by the non-null parameter values.
@@ -283,6 +327,8 @@ abstract class _PetResponse implements PetResponse {
       required final String age,
       required final String breed,
       required final String description,
+      required final String geohash,
+      required final String ownerId,
       required final String gender,
       required final String name,
       required final List<String> photos,
@@ -299,6 +345,10 @@ abstract class _PetResponse implements PetResponse {
   String get breed;
   @override
   String get description;
+  @override
+  String get geohash;
+  @override
+  String get ownerId;
   @override
   String get gender;
   @override

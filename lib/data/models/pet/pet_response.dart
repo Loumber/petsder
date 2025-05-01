@@ -10,6 +10,8 @@ class PetResponse with _$PetResponse {
     required String age,
     required String breed,
     required String description,
+    required String geohash,
+    required String ownerId,
     required String gender,
     required String name,
     required List<String> photos,

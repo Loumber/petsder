@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:petsder/common/utils/di/app_async_dependency.dart';
 import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
+import 'package:petsder/domain/notification/notitfication_repository.dart';
 import 'package:petsder/domain/pet/pet_repository.dart';
 import 'package:petsder/domain/user/user_controller.dart';
 import 'package:provider/provider.dart';
@@ -20,6 +21,8 @@ class UserInfoDependency extends AppAsyncDependency {
 
   late final PetRepository petRepository;
 
+  late final NotificationRepository notificationRepository;
+
   Timer? _statusFlowForRateOrderTimer;
 
   late final UserController userController;
@@ -27,9 +30,22 @@ class UserInfoDependency extends AppAsyncDependency {
 
   @override
   Future<void> initAsync(BuildContext context) async {
+
+
+    notificationRepository = NotificationRepository();
+
+    try{
+      notificationRepository.initNotifications();
+    } on Object {
+      rethrow;
+    }
+
     await _initOverlayBlocSubscription(context);
     authRepository = AuthRepository();
     petRepository = PetRepository();
+    await petRepository.getCurrentPet();
+    // ignore: use_build_context_synchronously
+    await petRepository.setGeoHashForCurrentPet(context.global.geolocationRepository.getGeoHash(await context.global.geolocationRepository.getCurrentPosition()));
     await petRepository.getCurrentPet();
     userController = UserController(currentPetNotifier:  petRepository.currentPetNotifier);
   }

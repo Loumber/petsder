@@ -1,3 +1,4 @@
+import 'package:dart_geohash/dart_geohash.dart';
 import 'package:geolocator/geolocator.dart';
 
 
@@ -31,5 +32,14 @@ class GeolocationRepository {
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(e, stackTrace);
     }
+  }
+
+  String getGeoHash(Position? position) {
+    if(position == null) return '';
+    final geoHasher = GeoHasher();
+
+    final geoHash = geoHasher.encode(position.longitude, position.latitude, precision: 5);
+
+    return geoHash;
   }
 }

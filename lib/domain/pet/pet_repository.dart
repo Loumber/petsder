@@ -68,15 +68,33 @@ class PetRepository {
     }
   }
 
-  Future<void> addPet(
-    String name,
-    String age,
-    String type,
-    String breed,
-    String gender,
-    List<String> photos,
-    String description,
-  ) async {
+  Future<void> setGeoHashForCurrentPet(String geohash) async {
+    if (FirebaseAuth.instance.currentUser == null) return;
+
+    try {
+      final user = FirebaseAuth.instance.currentUser!.uid;
+
+      final firestore = FirebaseFirestore.instance;
+
+      final userDoc = await firestore.collection('users').doc(user).get();
+
+      if (userDoc.exists) {
+        final petId = userDoc['currentPet'];
+        final petDoc = await firestore.collection('pets').doc(petId).get();
+
+        if (petDoc.exists) {
+          await firestore.collection('pets').doc(petId).update({
+            'geohash': geohash,
+          });
+        }
+      }
+    } on Object {
+      rethrow;
+    }
+  }
+
+  Future<void> addPet(String name, String age, String type, String breed, String gender, List<String> photos,
+      String description, String geohash) async {
     if (FirebaseAuth.instance.currentUser == null) return;
 
     final user = FirebaseAuth.instance.currentUser!.uid;
@@ -92,20 +110,17 @@ class PetRepository {
       'gender': gender,
       'photos': photos,
       'description': description,
+      'geohash': geohash,
     };
 
     final firestore = FirebaseFirestore.instance;
 
     await firestore.collection('pets').doc(pId).set(petData);
 
-    await firestore
-        .collection('finder')
-        .doc(type)
-        .collection(breed)
-        .doc(gender)
-        .collection('pets')
-        .doc(pId)
-        .set({'id': pId});
+    await firestore.collection('finder').doc(type).collection(breed).doc(gender).collection('pets').doc(pId).set({
+      'id': pId,
+      'geohash': geohash,
+    });
     await firestore.collection('users').doc(user).update({
       'pets': FieldValue.arrayUnion([pId]),
       'currentPet': pId,
@@ -155,11 +170,45 @@ class PetRepository {
   Future<void> editPetName(String name) async {
     if (FirebaseAuth.instance.currentUser == null) return;
 
-    if(_currentPetNotifier.value == null) return;
+    if (_currentPetNotifier.value == null) return;
     final pId = _currentPetNotifier.value!.id;
 
     final petRef = await FirebaseFirestore.instance.collection('pets').doc(pId);
 
     await petRef.update({'name': name});
+  }
+
+  Future<List<PetResponse>> findPotentialMatches() async {
+    final firestore = FirebaseFirestore.instance;
+    try {
+      if (_currentPetNotifier.value == null) return [];
+      final currentPet = _currentPetNotifier.value!;
+
+      final prefix = currentPet.geohash.substring(0, 5);
+
+      final snapshot = await FirebaseFirestore.instance
+          .collection('finder')
+          .doc(currentPet.type)
+          .collection(currentPet.breed)
+          .doc(currentPet.gender == 'Самец' ? 'Самка' : 'Самец')
+          .collection('pets')
+          .where('geohash', isGreaterThanOrEqualTo: prefix)
+          .where('geohash', isLessThan: '$prefix~')
+          .get();
+
+      final petDocs = await Future.wait(snapshot.docs.map((doc) async {
+        final petId = doc.id;
+        final fullPetDoc = await firestore.collection('pets').doc(petId).get();
+        if (fullPetDoc.exists) {
+          return PetResponse.fromJson(fullPetDoc.data()!);
+        } else {
+          return null;
+        }
+      }));
+
+      return  petDocs.whereType<PetResponse>().where((p) => p.ownerId != currentPet.ownerId).toList();
+    } on Object {
+      rethrow;
+    }
   }
 }

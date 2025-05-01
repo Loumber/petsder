@@ -5,6 +5,7 @@ import 'package:elementary/elementary.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petsder/common/utils/di/app_async_dependency.dart';
 import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
+import 'package:petsder/common/utils/di/scopes/user_info/user_info_scope.dart';
 import 'package:petsder/common/utils/di/wrappers/user_scope_wrapper.dart';
 import 'package:petsder/common/utils/extensions/widget_model_extensions.dart';
 import 'package:petsder/common/utils/logger/logger.dart';
@@ -69,7 +70,8 @@ abstract interface class IAddPetWidgetModel implements IWidgetModel {
 AddPetWidgetModel defaultAddPetWidgetModelFactory(BuildContext context) {
   return AddPetWidgetModel(AddPetModel(
     context.global.animalRepository,
-    context.global.petRepository,
+    context.user.petRepository,
+    context.global.geolocationRepository,
     context.global.overlayBloc,
   ));
 }
@@ -183,7 +185,7 @@ class AddPetWidgetModel extends WidgetModel<AddPetScreen, IAddPetModel>
     );
 
     // ignore: use_build_context_synchronously
-    context.router.push(const MenuRoute());
+    context.router.push(MenuRoute());
     } on Object {
       model.showOverlayNotification(const Text('Не удалось отправить данные о питомце'));
     }

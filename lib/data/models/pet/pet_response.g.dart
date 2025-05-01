@@ -12,6 +12,8 @@ _$PetResponseImpl _$$PetResponseImplFromJson(Map<String, dynamic> json) =>
       age: json['age'] as String,
       breed: json['breed'] as String,
       description: json['description'] as String,
+      geohash: json['geohash'] as String,
+      ownerId: json['ownerId'] as String,
       gender: json['gender'] as String,
       name: json['name'] as String,
       photos:
@@ -25,6 +27,8 @@ Map<String, dynamic> _$$PetResponseImplToJson(_$PetResponseImpl instance) =>
       'age': instance.age,
       'breed': instance.breed,
       'description': instance.description,
+      'geohash': instance.geohash,
+      'ownerId': instance.ownerId,
       'gender': instance.gender,
       'name': instance.name,
       'photos': instance.photos,

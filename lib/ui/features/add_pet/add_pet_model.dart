@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petsder/data/models/animal/animal_response.dart';
 import 'package:petsder/domain/animal/animal_repository.dart';
+import 'package:petsder/domain/geolocation/geolocation_repository.dart';
 import 'package:petsder/domain/overlay_bloc/overlay_bloc.dart';
 import 'package:petsder/domain/overlay_bloc/overlay_bloc_events.dart';
 import 'package:petsder/domain/pet/pet_repository.dart';
@@ -18,11 +19,18 @@ abstract interface class IAddPetModel extends ElementaryModel{
 
 class AddPetModel extends IAddPetModel {
 
-  AddPetModel(this._animalRepository, this._petRepository ,this._overlayBloc);
+  AddPetModel(
+    this._animalRepository,
+    this._petRepository,
+    this._geolocationRepository,
+    this._overlayBloc
+  );
 
   final AnimalRepository _animalRepository;
 
   final PetRepository _petRepository;
+
+  final GeolocationRepository _geolocationRepository;
 
   final OverlayBloc _overlayBloc;
 
@@ -47,7 +55,11 @@ class AddPetModel extends IAddPetModel {
 
     final phs = await _petRepository.getPetPhotos(name);
 
-    await _petRepository.addPet(name, age, type, breed, gender, phs, description);
+    final positioned = await _geolocationRepository.getCurrentPosition();
+
+    final geohash =  _geolocationRepository.getGeoHash(positioned);
+
+    await _petRepository.addPet(name, age, type, breed, gender, phs, description, geohash);
   }
 
 }
