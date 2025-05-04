@@ -182,7 +182,7 @@ class AddPetWidgetModel extends WidgetModel<AddPetScreen, IAddPetModel>
     );
 
     // ignore: use_build_context_synchronously
-    context.router.push(MenuRoute());
+    context.router.push(const MenuRoute());
     } on Object {
       model.showOverlayNotification(const Text('Не удалось отправить данные о питомце'));
     }

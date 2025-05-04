@@ -38,7 +38,7 @@ class LikesOrMessagesScreen extends ElementaryWidget<ILikesOrMessagesWidgetModel
                       ),
                     ),
                     if (state == LikeOrMessageState.like) ...[
-                      Expanded(child: const LikesWidgets()),
+                      const Expanded(child: LikesWidgets()),
                     ] else
                       ...[]
                   ],

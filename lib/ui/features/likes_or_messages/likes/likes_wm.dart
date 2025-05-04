@@ -8,7 +8,6 @@ import 'package:petsder/common/utils/navigation/app_router.dart';
 import 'package:petsder/data/models/pet/pet_response.dart';
 import 'package:petsder/ui/features/likes_or_messages/likes/likes_model.dart';
 import 'package:petsder/ui/features/likes_or_messages/likes/likes_widgets.dart';
-import 'package:petsder/ui/features/menu/widgets/pet_screen.dart';
 import 'package:petsder/ui/theme/theme.dart';
 
 abstract interface class ILikesWidgetModel implements IWidgetModel {

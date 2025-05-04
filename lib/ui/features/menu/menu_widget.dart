@@ -3,7 +3,6 @@ import 'package:elementary/elementary.dart';
 import 'package:elementary_helper/elementary_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:petsder/common/utils/logger/logger.dart';
 import 'package:petsder/ui/features/app_lodaing_error.dart/app_loading_error_widget.dart';
 import 'package:petsder/ui/features/menu/menu_wm.dart';
 import 'package:petsder/ui/features/menu/widgets/pet_card.dart';

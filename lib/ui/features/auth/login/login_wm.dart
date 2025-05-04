@@ -80,7 +80,7 @@ class LoginWidgetModel extends WidgetModel<LoginScreen, ILoginModel>
       // ignore: use_build_context_synchronously
       context.user.userController.currentPetNotifier.value = null;
       // ignore: use_build_context_synchronously
-      context.router.push(MenuRoute());
+      context.router.push(const MenuRoute());
     } on Exception {
       model.showOverlayNotification(const Text('Не удалось войти'));
     }
