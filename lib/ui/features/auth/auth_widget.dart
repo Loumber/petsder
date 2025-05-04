@@ -17,7 +17,7 @@ class AuthScreen extends ElementaryWidget<IAuthWidgetModel> {
   Widget build(IAuthWidgetModel wm) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      body: ValueListenableBuilder<AuthState>(
+      body: ValueListenableBuilder<AuthState>(//
         valueListenable: wm.authListenable, 
         builder: (context, state, _) {  
           return state == AuthState.login 

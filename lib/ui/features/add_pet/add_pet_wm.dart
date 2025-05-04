@@ -3,16 +3,13 @@ import 'package:elementary_helper/elementary_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:elementary/elementary.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:petsder/common/utils/di/app_async_dependency.dart';
 import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
 import 'package:petsder/common/utils/di/scopes/user_info/user_info_scope.dart';
-import 'package:petsder/common/utils/di/wrappers/user_scope_wrapper.dart';
 import 'package:petsder/common/utils/extensions/widget_model_extensions.dart';
 import 'package:petsder/common/utils/logger/logger.dart';
 import 'package:petsder/common/utils/navigation/app_router.dart';
 import 'package:petsder/data/models/animal/animal_response.dart';
 import 'package:petsder/data/models/enums/add_pet_state.dart';
-import 'package:petsder/ui/features/auth/login/login_wm.dart';
 
 import '../../theme/theme.dart';
 import 'add_pet_model.dart';

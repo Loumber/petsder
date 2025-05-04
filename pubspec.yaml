@@ -57,6 +57,7 @@ dependencies:
   dart_geohash: ^2.1.0
   firebase_messaging: ^15.2.5
   flutter_card_swiper: ^7.0.2
+  collection: ^1.19.1
 
 dev_dependencies:
   flutter_test:
@@ -85,6 +86,9 @@ flutter:
     - assets/pets_empty.svg
     - assets/pets.svg
     - assets/google-logo.svg
+    - assets/heart-sms.svg
+    - assets/heart.svg
+    - assets/sms.svg
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

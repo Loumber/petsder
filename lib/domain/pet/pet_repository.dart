@@ -206,8 +206,45 @@ class PetRepository {
         }
       }));
 
-      return  petDocs.whereType<PetResponse>().where((p) => p.ownerId != currentPet.ownerId).toList();
+      return petDocs.whereType<PetResponse>().where((p) => p.ownerId != currentPet.ownerId).toList();
     } on Object {
+      rethrow;
+    }
+  }
+
+  Future<void> likePet(String likedPetId, String fromPetId) async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+
+      await firestore.collection('likes').doc(likedPetId).collection('from').doc(fromPetId).set({
+        'timestamp': FieldValue.serverTimestamp(),
+        'fromPetId': fromPetId,
+      });
+    } on Object {
+      rethrow;
+    }
+  }
+
+  Future<List<PetResponse>> getLikesPet() async {
+    try {
+      final firestore = FirebaseFirestore.instance;
+      final currentPet = _currentPetNotifier.value;
+
+      if (currentPet == null) return [];
+
+      final likesSnapshot = await firestore.collection('likes').doc(currentPet.id).collection('from').get();
+
+      final likedByIds = likesSnapshot.docs.map((doc) => doc.id).toList();
+
+      if (likedByIds.isEmpty) return [];
+
+      final petsQuerySnapshot =
+          await firestore.collection('pets').where(FieldPath.documentId, whereIn: likedByIds).get();
+
+      final pets = petsQuerySnapshot.docs.map((doc) => PetResponse.fromJson(doc.data())).toList();
+
+      return pets;
+    } catch (e) {
       rethrow;
     }
   }

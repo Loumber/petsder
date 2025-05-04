@@ -23,57 +23,71 @@ class PetCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 500,
-      width: 300,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(30),
-        child: Stack(children: [
-          PageView.builder(
-              controller: _controller,
-              itemCount: petPhotos.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Image(
-                  image: NetworkImage(petPhotos[index]),
-                  fit: BoxFit.cover,
-                );
-              }),
-          Align(
-              alignment: Alignment.topCenter,
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: SmoothPageIndicator(
-                  controller: _controller,
-                  count: petPhotos.length,
-                  effect: ExpandingDotsEffect(
-                    activeDotColor: context.theme.main.primary,
-                    dotColor: context.theme.main.onPrimary,
-                  ),
+    return Container(
+      clipBehavior: Clip.hardEdge,
+      decoration: BoxDecoration(
+        borderRadius: const BorderRadius.all(Radius.circular(10)),
+        color: context.theme.main.inputFieldBackgroundColor,
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.2),
+            spreadRadius: 3,
+            blurRadius: 7,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      alignment: Alignment.center,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: Stack(
+              children: [
+                PageView.builder(
+                    controller: _controller,
+                    itemCount: petPhotos.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Image(
+                        image: NetworkImage(petPhotos[index]),
+                        fit: BoxFit.cover,
+                      );
+                    }),
+                Align(
+                    alignment: Alignment.topCenter,
+                    child: Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: SmoothPageIndicator(
+                        controller: _controller,
+                        count: petPhotos.length,
+                        effect: ExpandingDotsEffect(
+                          activeDotColor: context.theme.main.primary,
+                          dotColor: context.theme.main.onPrimary,
+                        ),
+                      ),
+                    )),
+              ],
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  '$name ${calculateAge(age)}',
+                  style: TextStyle(color: context.theme.main.inputFieldLabelColor, fontSize: 24, fontWeight: FontWeight.w600),
                 ),
-              )),
-          Align(
-              alignment: Alignment.bottomLeft,
-              child: Padding(
-                  padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Text(
-                        '$name ${calculateAge(age)}',
-                        style:
-                            TextStyle(color: context.theme.main.onPrimary, fontSize: 24, fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        discription,
-                        maxLines: 2,
-                        overflow: TextOverflow.ellipsis,
-                        style:
-                            TextStyle(color: context.theme.main.onPrimary, fontSize: 18, fontWeight: FontWeight.w400),
-                      ),
-                    ],
-                  ))),
-        ]),
+                Text(
+                  discription,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(color: context.theme.main.inputFieldLabelColor, fontSize: 18, fontWeight: FontWeight.w400),
+                ),
+              ],
+            ),
+          )
+        ],
       ),
     );
   }

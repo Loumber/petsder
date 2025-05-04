@@ -11,7 +11,6 @@ abstract interface class ILoginModel extends ElementaryModel{
   Future<void> loginWithGoogle();
 
   void showOverlayNotification(Widget widget);
-
 }
 
 class LoginModel extends ILoginModel {

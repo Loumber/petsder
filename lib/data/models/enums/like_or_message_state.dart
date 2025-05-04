@@ -1,0 +1,4 @@
+enum LikeOrMessageState {
+  like,
+  message
+}

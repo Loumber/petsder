@@ -5,6 +5,8 @@ abstract interface class IMenuScreenModel extends ElementaryModel{
 
   Future<List<PetResponse>> getPotentioalMatches();
 
+  Future<void> likePet(String likedPetId, String fromPetId);
+
 }
 
 class MenuScreenModel extends IMenuScreenModel {
@@ -23,7 +25,16 @@ class MenuScreenModel extends IMenuScreenModel {
     } on Object  {
       rethrow;
     }
+  }
 
 
+  @override
+  Future<void> likePet(String likedPetId, String fromPetId) async {
+    try{
+      await _petRepository.likePet(likedPetId, fromPetId);
+    } on Object {
+      rethrow;
+    }
+    
   }
 }

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../../common/utils/extensions/buildcontext_extensions.dart';
-
 class SuccessOverlayNotificationWidget extends StatefulWidget {
   const SuccessOverlayNotificationWidget({
     super.key,

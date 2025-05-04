@@ -39,24 +39,32 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const EditPetScreen(),
       );
     },
-    LikesRoute.name: (routeData) {
+    LikesOrMessagesRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const LikesScreen(),
+        child: const LikesOrMessagesScreen(),
       );
     },
     MenuRoute.name: (routeData) {
-      final args =
-          routeData.argsAs<MenuRouteArgs>(orElse: () => const MenuRouteArgs());
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: MenuScreen(key: args.key),
+        child: const MenuScreen(),
       );
     },
     NavigationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
         child: const NavigationScreen(),
+      );
+    },
+    PetRoute.name: (routeData) {
+      final args = routeData.argsAs<PetRouteArgs>();
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: PetScreen(
+          key: args.key,
+          pet: args.pet,
+        ),
       );
     },
     UserWrapperRoute.name: (routeData) {
@@ -125,45 +133,31 @@ class EditPetRoute extends PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [LikesScreen]
-class LikesRoute extends PageRouteInfo<void> {
-  const LikesRoute({List<PageRouteInfo>? children})
+/// [LikesOrMessagesScreen]
+class LikesOrMessagesRoute extends PageRouteInfo<void> {
+  const LikesOrMessagesRoute({List<PageRouteInfo>? children})
       : super(
-          LikesRoute.name,
+          LikesOrMessagesRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'LikesRoute';
+  static const String name = 'LikesOrMessagesRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
 /// [MenuScreen]
-class MenuRoute extends PageRouteInfo<MenuRouteArgs> {
-  MenuRoute({
-    Key? key,
-    List<PageRouteInfo>? children,
-  }) : super(
+class MenuRoute extends PageRouteInfo<void> {
+  const MenuRoute({List<PageRouteInfo>? children})
+      : super(
           MenuRoute.name,
-          args: MenuRouteArgs(key: key),
           initialChildren: children,
         );
 
   static const String name = 'MenuRoute';
 
-  static const PageInfo<MenuRouteArgs> page = PageInfo<MenuRouteArgs>(name);
-}
-
-class MenuRouteArgs {
-  const MenuRouteArgs({this.key});
-
-  final Key? key;
-
-  @override
-  String toString() {
-    return 'MenuRouteArgs{key: $key}';
-  }
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for
@@ -178,6 +172,43 @@ class NavigationRoute extends PageRouteInfo<void> {
   static const String name = 'NavigationRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [PetScreen]
+class PetRoute extends PageRouteInfo<PetRouteArgs> {
+  PetRoute({
+    Key? key,
+    required PetResponse pet,
+    List<PageRouteInfo>? children,
+  }) : super(
+          PetRoute.name,
+          args: PetRouteArgs(
+            key: key,
+            pet: pet,
+          ),
+          initialChildren: children,
+        );
+
+  static const String name = 'PetRoute';
+
+  static const PageInfo<PetRouteArgs> page = PageInfo<PetRouteArgs>(name);
+}
+
+class PetRouteArgs {
+  const PetRouteArgs({
+    this.key,
+    required this.pet,
+  });
+
+  final Key? key;
+
+  final PetResponse pet;
+
+  @override
+  String toString() {
+    return 'PetRouteArgs{key: $key, pet: $pet}';
+  }
 }
 
 /// generated route for

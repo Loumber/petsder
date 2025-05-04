@@ -1,7 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/foundation.dart';
+import 'package:petsder/data/models/pet/pet_response.dart';
 import 'package:petsder/ui/features/edit_pet/edit_pet_widget.dart';
-import 'package:petsder/ui/features/likes/likes_widget.dart';
+import 'package:petsder/ui/features/likes_or_messages/likes_or_messages_widget.dart';
+import 'package:petsder/ui/features/menu/widgets/pet_screen.dart';
 
 import '../../../ui/features/account/account_widget.dart';
 import '../../../ui/features/add_pet/add_pet_widget.dart';
@@ -44,7 +46,7 @@ class AppRouter extends _$AppRouter {
                     transitionsBuilder: TransitionsBuilders.noTransition,
                   ),
                   CustomRoute(
-                    page: LikesRoute.page,
+                    page: LikesOrMessagesRoute.page,
                     path: 'likes',
                     transitionsBuilder: TransitionsBuilders.noTransition,
                   ),
@@ -54,6 +56,10 @@ class AppRouter extends _$AppRouter {
                     transitionsBuilder: TransitionsBuilders.noTransition,
                   ),
                 ]),
+            AutoRoute(
+              page: PetRoute.page,
+              path: 'pet',
+            ),
             AutoRoute(
               page: EditPetRoute.page,
               path: 'edit-pet',

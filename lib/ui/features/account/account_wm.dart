@@ -107,6 +107,8 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
   @override
   Future<void> onSignOutTap() async {
     await model.signOut();
+    // ignore: use_build_context_synchronously
+    context.router.push(const AuthRoute());
   }
 
   Future<void> onSaveTap() async {
