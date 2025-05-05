@@ -20,7 +20,9 @@ class NavigationScreen extends ElementaryWidget<INavigationWidgetModel> {
           mainAxisSize: MainAxisSize.min,
           children: [
             BottomNavigationBar(
+              backgroundColor: context.theme.main.googleButton,
               selectedItemColor: context.theme.main.primary,
+              unselectedItemColor: context.theme.main.inputFieldLabelColor,
               currentIndex: router.activeIndex,
               onTap: router.setActiveIndex,
               items: [

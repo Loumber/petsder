@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:petsder/common/utils/extensions/buildcontext_extensions.dart';
 import 'package:petsder/ui/widgets/buttons/app_button.dart';
 
 class ChangePasswordBottomSheet extends StatelessWidget {
@@ -28,6 +29,7 @@ class ChangePasswordBottomSheet extends StatelessWidget {
           ),
           child: Material(
             borderRadius: const BorderRadius.only(topLeft: Radius.circular(16), topRight: Radius.circular(16)),
+            color: context.theme.main.inputFieldBackgroundColor,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
                 child: Column(
@@ -38,8 +40,9 @@ class ChangePasswordBottomSheet extends StatelessWidget {
                       height: 100,
                       child: TextField(
                         controller: controller,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
+                        decoration: InputDecoration(
+                          fillColor: context.theme.main.inputFieldBackgroundColor,
+                          border: const OutlineInputBorder(),
                           labelText: 'Введите новый пароль',
                         ),
                       ),

@@ -5,6 +5,7 @@ import 'package:petsder/data/models/enums/like_or_message_state.dart';
 import 'package:petsder/data/models/indexed_selector_item/indexed_selector_item.dart';
 import 'package:petsder/ui/features/likes_or_messages/likes/likes_widgets.dart';
 import 'package:petsder/ui/features/likes_or_messages/likes_or_messages_wm.dart';
+import 'package:petsder/ui/features/likes_or_messages/messages/messages_widgets.dart';
 import 'package:petsder/ui/features/likes_or_messages/widgets/indexed_selector.dart';
 
 @RoutePage()
@@ -39,8 +40,9 @@ class LikesOrMessagesScreen extends ElementaryWidget<ILikesOrMessagesWidgetModel
                     ),
                     if (state == LikeOrMessageState.like) ...[
                       const Expanded(child: LikesWidgets()),
-                    ] else
-                      ...[]
+                    ] else ...[
+                      const MessagesWidget(),
+                    ]
                   ],
                 ),
               );

@@ -4,6 +4,7 @@ import 'package:petsder/data/models/pet/pet_response.dart';
 import 'package:petsder/ui/features/edit_pet/edit_pet_widget.dart';
 import 'package:petsder/ui/features/likes_or_messages/likes_or_messages_widget.dart';
 import 'package:petsder/ui/features/menu/widgets/pet_screen.dart';
+import 'package:petsder/ui/features/messaging/messaging_widget.dart';
 
 import '../../../ui/features/account/account_widget.dart';
 import '../../../ui/features/add_pet/add_pet_widget.dart';
@@ -59,6 +60,10 @@ class AppRouter extends _$AppRouter {
             AutoRoute(
               page: PetRoute.page,
               path: 'pet',
+            ),
+            AutoRoute(
+              page: MessagingRoute.page,
+              path: 'messaging',
             ),
             AutoRoute(
               page: EditPetRoute.page,

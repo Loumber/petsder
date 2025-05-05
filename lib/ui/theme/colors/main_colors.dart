@@ -7,6 +7,7 @@ class MainColors {
     required this.appBarBackgroundColor,
     required this.primary,
     required this.onPrimary,
+    required this.messageName,
     required this.divider,
     required this.googleButton,
     required this.inputFieldBackgroundColor,
@@ -25,11 +26,13 @@ class MainColors {
     inputFieldBackgroundColor: Colors.white,
     inputFieldLabelColor: const Color(0xFF919191),
     inputFieldBorderColor: const Color(0xFF919191),
+    messageName: Colors.black,
     error: const Color(0xFFFF0000),
   );
 
   factory MainColors.dark() => MainColors(
     scaffoldBackgroundColor:  Colors.black,
+    messageName: Colors.white,
     appBarBackgroundColor:  const Color(0xFFFF942E),
     primary:  const Color(0xFFFF942E),
     divider: const Color(0xFF2F374E),
@@ -42,6 +45,7 @@ class MainColors {
   );
 
   Color scaffoldBackgroundColor;
+  Color messageName;
   Color appBarBackgroundColor;
   Color primary;
   Color onPrimary;

@@ -51,6 +51,12 @@ abstract class _$AppRouter extends RootStackRouter {
         child: const MenuScreen(),
       );
     },
+    MessagingRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const MessagingScreen(),
+      );
+    },
     NavigationRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
@@ -156,6 +162,20 @@ class MenuRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MenuRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
+}
+
+/// generated route for
+/// [MessagingScreen]
+class MessagingRoute extends PageRouteInfo<void> {
+  const MessagingRoute({List<PageRouteInfo>? children})
+      : super(
+          MessagingRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'MessagingRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }

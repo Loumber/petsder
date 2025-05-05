@@ -31,11 +31,7 @@ class Settigs extends StatelessWidget {
             ),
           ),
         ),
-        Container(
-          color: context.theme.main.inputFieldBorderColor,
-          height: 1,
-          width: 375,
-        ),
+        
         SizedBox(
           width: 375,
           child: CupertinoButton(
