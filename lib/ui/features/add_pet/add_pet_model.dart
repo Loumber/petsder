@@ -11,7 +11,7 @@ abstract interface class IAddPetModel extends ElementaryModel{
 
   Future<List<AnimalResponse>> getAnimals();
 
-  Future<void> addPet(String name, String age, String type, String breed, String gender, List<XFile?> photos, String description);
+  Future<void> addPet(String name, String age, String type, String breed, String gender, List<XFile?> photos, String description,BuildContext context);
 
   void showOverlayNotification(Widget widget);
 
@@ -50,7 +50,7 @@ class AddPetModel extends IAddPetModel {
     
 
   @override
-  Future<void> addPet(String name, String age, String type, String breed, String gender, List<XFile?> photos, String description) async {
+  Future<void> addPet(String name, String age, String type, String breed, String gender, List<XFile?> photos, String description, BuildContext context) async {
     await _petRepository.uploadPhotos(name, photos);
 
     final phs = await _petRepository.getPetPhotos(name);
@@ -59,7 +59,8 @@ class AddPetModel extends IAddPetModel {
 
     final geohash =  _geolocationRepository.getGeoHash(positioned);
 
-    await _petRepository.addPet(name, age, type, breed, gender, phs, description, geohash);
+    // ignore: use_build_context_synchronously
+    await _petRepository.addPet(name, age, type, breed, gender, phs, description, geohash,context);
   }
 
 }

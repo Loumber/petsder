@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
  
 
-class AppLoadingErrorWidget extends StatelessWidget  {
-  const AppLoadingErrorWidget({
+class FindErrorWidget extends StatelessWidget  {
+  const FindErrorWidget({
     super.key
   });
 
@@ -10,7 +10,7 @@ class AppLoadingErrorWidget extends StatelessWidget  {
   Widget build(context) {
     return const Scaffold(
       body: Center(
-        child: Text('Упс...'),
+        child: Text('Не удалось никого найти поблизости'),
       ),
     );
   }

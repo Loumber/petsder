@@ -162,105 +162,108 @@ class AddPetScreen extends ElementaryWidget<IAddPetWidgetModel> {
                     },
                   );
                 }
-                if(state == AddPetState.photo) {
+                if (state == AddPetState.photo) {
                   return Column(
                     children: [
                       const SizedBox(
                         height: 15,
                       ),
                       EntityStateNotifierBuilder(
-                        listenableEntityState: wm.photosListenable, 
-                        builder: (context, photos){
-                          if(photos == null) return const SizedBox();
-                          return Expanded(
-                            child: GridView.builder(
-                              padding: const EdgeInsets.all(16),
-                              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 3,
-                                crossAxisSpacing: 15,
-                                mainAxisSpacing: 15,
-                                childAspectRatio: 0.6,
-                              ),
-                              itemCount: photos.length,
-                              itemBuilder: (context, index){
-                                return InkWell(
-                                  onTap: () => wm.onPhotoTap(index),
-                                  child: PetPhoto(
-                                    image: photos[index],
+                          listenableEntityState: wm.photosListenable,
+                          builder: (context, photos) {
+                            if (photos == null) return const SizedBox();
+                            return Expanded(
+                              child: GridView.builder(
+                                  padding: const EdgeInsets.all(16),
+                                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                                    crossAxisCount: 3,
+                                    crossAxisSpacing: 15,
+                                    mainAxisSpacing: 15,
+                                    childAspectRatio: 0.6,
                                   ),
-                                );
-                              }
-                            ),
-                          );
-                        }
-                      ),
+                                  itemCount: photos.length,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                      onTap: () => wm.onPhotoTap(index),
+                                      child: PetPhoto(
+                                        image: photos[index],
+                                      ),
+                                    );
+                                  }),
+                            );
+                          }),
                       AppButton(
-                        text: 'Сохранить фотографии', 
+                        text: 'Сохранить фотографии',
                         onPressed: wm.onSavePhotosPressed,
                       ),
-                      const SizedBox(height: 15,),
-                      RichText(
-                        text: TextSpan(
-                          text: 'Изменить информацию о питомце', 
-                          style: TextStyle(
-                            color: wm.theme.main.inputFieldLabelColor,
-                            fontSize: 16,
-                            decoration: TextDecoration.underline, 
-                          ),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () => wm.onMainTap(),
-                        )
+                      const SizedBox(
+                        height: 15,
                       ),
-                      const SizedBox(height: 85,),
+                      RichText(
+                          text: TextSpan(
+                        text: 'Изменить информацию о питомце',
+                        style: TextStyle(
+                          color: wm.theme.main.inputFieldLabelColor,
+                          fontSize: 16,
+                          decoration: TextDecoration.underline,
+                        ),
+                        recognizer: TapGestureRecognizer()..onTap = () => wm.onMainTap(),
+                      )),
+                      const SizedBox(
+                        height: 85,
+                      ),
                     ],
                   );
                 }
-                if(state == AddPetState.additional) {
-                  return  Center(
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 32),
-                          child: Text(
-                            'Раскажите подробнее о своем питомце',
-                            style: TextStyle(
-                              color: wm.theme.main.inputFieldLabelColor,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: TextField(
-                            controller: wm.additionalInfoController,
-                            maxLines: 10,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: AppButton(
-                            text: 'Сохранить информацию о питомце',
-                            onPressed: wm.onSaveInfoTap,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: RichText(
-                            text: TextSpan(
-                              text: 'Вернуться к выбору фотографий', 
-                              style: TextStyle(
-                                color: wm.theme.main.inputFieldLabelColor,
-                                fontSize: 16,
-                                decoration: TextDecoration.underline, 
+                if (state == AddPetState.additional) {
+                  return ValueListenableBuilder(
+                      valueListenable: wm.loadingListenable,
+                      builder: (context, loading, _) {
+                        if (loading) return const AppLoading();
+                        return Center(
+                          child: Column(
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 8.0, vertical: 32),
+                                child: Text(
+                                  'Раскажите подробнее о своем питомце',
+                                  style: TextStyle(
+                                    color: wm.theme.main.inputFieldLabelColor,
+                                    fontSize: 20,
+                                  ),
+                                ),
                               ),
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => wm.onPhotosTap(),
-                            )
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: TextField(
+                                  controller: wm.additionalInfoController,
+                                  maxLines: 10,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: AppButton(
+                                  text: 'Сохранить информацию о питомце',
+                                  onPressed: wm.onSaveInfoTap,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: RichText(
+                                    text: TextSpan(
+                                  text: 'Вернуться к выбору фотографий',
+                                  style: TextStyle(
+                                    color: wm.theme.main.inputFieldLabelColor,
+                                    fontSize: 16,
+                                    decoration: TextDecoration.underline,
+                                  ),
+                                  recognizer: TapGestureRecognizer()..onTap = () => wm.onPhotosTap(),
+                                )),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
-                  );
+                        );
+                      });
                 }
                 return const SizedBox();
               }),

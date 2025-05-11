@@ -77,10 +77,6 @@ class MenuScreenWidgetModel extends WidgetModel<MenuScreen, IMenuScreenModel>
 
   @override
   Future<bool> onSwipe(int previousIndex, int? currentIndex, CardSwiperDirection direction) async {
-    AppLogger.info(
-      'The card $previousIndex was swiped to the ${direction.name}. Now the card $currentIndex is on top',
-    );
-
     if(direction == CardSwiperDirection.right) {
       if(_petsEntity.value.data == null) return false;
       await model.likePet(_petsEntity.value.data![previousIndex].id, context.user.userController.currentPetNotifier.value!.id);

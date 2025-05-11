@@ -75,10 +75,8 @@ class LoginWidgetModel extends WidgetModel<LoginScreen, ILoginModel>
     try{
       await model.login(_emailController.text, _passwordController.text);
 
-      //await model.getCurrentPet();
-
       // ignore: use_build_context_synchronously
-      context.user.userController.currentPetNotifier.value = null;
+      await context.user.updateCurrentPet();
       // ignore: use_build_context_synchronously
       context.router.push(const MenuRoute());
     } on Exception {

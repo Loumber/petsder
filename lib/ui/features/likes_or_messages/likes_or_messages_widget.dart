@@ -31,7 +31,7 @@ class LikesOrMessagesScreen extends ElementaryWidget<ILikesOrMessagesWidgetModel
                             selected: state == LikeOrMessageState.like,
                           ),
                           IndexedSelectorItem(
-                            'сообщения',
+                            'чаты',
                             () => wm.onChangeLikeOrMessageState(LikeOrMessageState.message),
                             selected: state == LikeOrMessageState.message,
                           ),
@@ -41,7 +41,7 @@ class LikesOrMessagesScreen extends ElementaryWidget<ILikesOrMessagesWidgetModel
                     if (state == LikeOrMessageState.like) ...[
                       const Expanded(child: LikesWidgets()),
                     ] else ...[
-                      const MessagesWidget(),
+                      const Expanded(child:  MessagesWidget()),
                     ]
                   ],
                 ),

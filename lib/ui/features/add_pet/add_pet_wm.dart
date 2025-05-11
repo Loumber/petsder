@@ -18,6 +18,8 @@ import 'add_pet_widget.dart';
 abstract interface class IAddPetWidgetModel implements IWidgetModel {
 
   ValueNotifier<AddPetState> get stateListenable;
+
+  ValueNotifier<bool> get loadingListenable;
   
   ValueNotifier<EntityState<List<AnimalResponse>>> get animalsListenable;
 
@@ -86,6 +88,11 @@ class AddPetWidgetModel extends WidgetModel<AddPetScreen, IAddPetModel>
 
   @override
   ValueNotifier<EntityState<List<XFile?>>> get photosListenable => _photosEntity;
+
+  final _loadingEntity = ValueNotifier<bool>(false);
+
+  @override
+  ValueNotifier<bool> get loadingListenable => _loadingEntity;
 
   final _animalsEntity = EntityStateNotifier<List<AnimalResponse>>();
 
@@ -168,7 +175,8 @@ class AddPetWidgetModel extends WidgetModel<AddPetScreen, IAddPetModel>
 
   @override
   Future<void> onSaveInfoTap() async {
-    _animalsEntity.loading();
+    _loadingEntity.value = false;
+    _loadingEntity.value = true;
 
     try {
       await model.addPet(
@@ -178,11 +186,16 @@ class AddPetWidgetModel extends WidgetModel<AddPetScreen, IAddPetModel>
       breedController.text,
       _genderEntity.value.data!,
       photosListenable.value.data!,
-      additionalInfoController.text
+      additionalInfoController.text,
+      context
     );
 
     // ignore: use_build_context_synchronously
-    context.router.push(const MenuRoute());
+    await context.user.updateCurrentPet();
+
+    // ignore: use_build_context_synchronously
+    await context.router.replaceAll([const MenuRoute()]);
+    _loadingEntity.value = false;
     } on Object {
       model.showOverlayNotification(const Text('Не удалось отправить данные о питомце'));
     }

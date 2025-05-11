@@ -33,11 +33,11 @@ class LikesWidgets extends ElementaryWidget<ILikesWidgetModel> {
               return GestureDetector(
                 onTap:() => wm.onPetTap(index),
                 child: LikeCard(
-                  index: index,
                   name: likes[index].name,
                   age: likes[index].age,
                   discription: likes[index].description,
                   petPhotos: likes[index].photos,
+                  onLikeTap:() => wm.onLikeTap(index),
                 ),
               );
             }

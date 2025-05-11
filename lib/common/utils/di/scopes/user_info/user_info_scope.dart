@@ -56,7 +56,10 @@ class UserInfoDependency extends AppAsyncDependency {
     _statusFlowForRateOrderTimer?.cancel();
   }
 
-  Future<void> updateCurrentPet() async => userController.currentPetNotifier.value = petRepository.currentPetNotifier.value;
+  Future<void> updateCurrentPet() async {
+    await petRepository.getCurrentPet();
+    userController.currentPetNotifier.value = petRepository.currentPetNotifier.value;
+  }  
 
   Future<void> _initOverlayBlocSubscription(BuildContext context) async {
     final overlay = Overlay.of(context);

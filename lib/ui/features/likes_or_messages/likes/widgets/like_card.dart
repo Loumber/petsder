@@ -7,13 +7,13 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 class LikeCard extends StatelessWidget {
   LikeCard(
       {super.key,
-      required this.index,
       required this.name,
       required this.age,
       required this.discription,
-      required this.petPhotos});
+      required this.petPhotos,
+      required this.onLikeTap,
+  });
 
-  final int index;
 
   final String name;
 
@@ -25,7 +25,7 @@ class LikeCard extends StatelessWidget {
 
   final _controller = PageController();
 
-  void Function(int index)? onLikeTap;
+  final Function() onLikeTap;
 
   @override
   Widget build(BuildContext context) {
@@ -78,7 +78,7 @@ class LikeCard extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () => onLikeTap!(index),
+          onTap: onLikeTap,
           child: ClipRRect(
             borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(30), bottomRight: Radius.circular(30)),
             child: SizedBox(

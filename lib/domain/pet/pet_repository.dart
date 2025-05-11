@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:crypton/crypton.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
 import 'package:petsder/data/models/pet/pet_response.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -94,11 +96,18 @@ class PetRepository {
   }
 
   Future<void> addPet(String name, String age, String type, String breed, String gender, List<String> photos,
-      String description, String geohash) async {
+      String description, String geohash, BuildContext context) async {
     if (FirebaseAuth.instance.currentUser == null) return;
+
+    final rsaKeypair = RSAKeypair.fromRandom();
+
+    final privateKey = rsaKeypair.privateKey;
+    final publicKey = rsaKeypair.publicKey;
 
     final user = FirebaseAuth.instance.currentUser!.uid;
     final pId = '${user}_$name';
+
+    context.global.secureStorage.write(key: '${pId}_private', value: privateKey.toPEM());
 
     final petData = {
       'id': pId,
@@ -111,6 +120,8 @@ class PetRepository {
       'photos': photos,
       'description': description,
       'geohash': geohash,
+      'privateKey': privateKey.toPEM(),
+      'publicKey': publicKey.toPEM(),
     };
 
     final firestore = FirebaseFirestore.instance;
@@ -219,7 +230,63 @@ class PetRepository {
       await firestore.collection('likes').doc(likedPetId).collection('from').doc(fromPetId).set({
         'timestamp': FieldValue.serverTimestamp(),
         'fromPetId': fromPetId,
+        'displayed': true,
       });
+
+      final mutualLikeDoc = await firestore.collection('likes').doc(fromPetId).collection('from').doc(likedPetId).get();
+
+      if (mutualLikeDoc.exists) {
+        await firestore
+            .collection('likes')
+            .doc(likedPetId)
+            .collection('from')
+            .doc(fromPetId)
+            .update({'displayed': false});
+        await firestore
+            .collection('likes')
+            .doc(fromPetId)
+            .collection('from')
+            .doc(likedPetId)
+            .update({'displayed': false});
+
+        final chatId = [fromPetId, likedPetId]..sort();
+        final chatDocId = chatId.join('_');
+
+        final chatRef = firestore.collection('chats').doc(chatDocId);
+
+        final chatSnapshot = await chatRef.get();
+        if (!chatSnapshot.exists) {
+          await chatRef.set({
+            'participants': [fromPetId, likedPetId],
+            'createdAt': FieldValue.serverTimestamp(),
+            'lastMessage': null,
+            'lastMessageTime': null
+          });
+
+          final batch = firestore.batch();
+
+          final fromChatRef = firestore.collection('pets').doc(fromPetId).collection('chats').doc(chatDocId);
+          final likedChatRef = firestore.collection('pets').doc(likedPetId).collection('chats').doc(chatDocId);
+
+          batch.set(fromChatRef, {
+            'chatId': chatDocId,
+            'withPetId': likedPetId,
+            'createdAt': FieldValue.serverTimestamp(),
+            'lastMessage': null,
+            'lastMessageTime': null
+          });
+
+          batch.set(likedChatRef, {
+            'chatId': chatDocId,
+            'withPetId': fromPetId,
+            'createdAt': FieldValue.serverTimestamp(),
+            'lastMessage': null,
+            'lastMessageTime': null
+          });
+
+          await batch.commit();
+        }
+      }
     } on Object {
       rethrow;
     }
@@ -232,7 +299,12 @@ class PetRepository {
 
       if (currentPet == null) return [];
 
-      final likesSnapshot = await firestore.collection('likes').doc(currentPet.id).collection('from').get();
+      final likesSnapshot = await firestore
+          .collection('likes')
+          .doc(currentPet.id)
+          .collection('from')
+          .where('displayed', isEqualTo: true)
+          .get();
 
       final likedByIds = likesSnapshot.docs.map((doc) => doc.id).toList();
 

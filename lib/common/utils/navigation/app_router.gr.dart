@@ -52,9 +52,15 @@ abstract class _$AppRouter extends RootStackRouter {
       );
     },
     MessagingRoute.name: (routeData) {
+      final args = routeData.argsAs<MessagingRouteArgs>();
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const MessagingScreen(),
+        child: MessagingScreen(
+          id: args.id,
+          name: args.name,
+          photoUrl: args.photoUrl,
+          key: args.key,
+        ),
       );
     },
     NavigationRoute.name: (routeData) {
@@ -168,16 +174,50 @@ class MenuRoute extends PageRouteInfo<void> {
 
 /// generated route for
 /// [MessagingScreen]
-class MessagingRoute extends PageRouteInfo<void> {
-  const MessagingRoute({List<PageRouteInfo>? children})
-      : super(
+class MessagingRoute extends PageRouteInfo<MessagingRouteArgs> {
+  MessagingRoute({
+    required String id,
+    required String name,
+    required String photoUrl,
+    Key? key,
+    List<PageRouteInfo>? children,
+  }) : super(
           MessagingRoute.name,
+          args: MessagingRouteArgs(
+            id: id,
+            name: name,
+            photoUrl: photoUrl,
+            key: key,
+          ),
           initialChildren: children,
         );
 
   static const String name = 'MessagingRoute';
 
-  static const PageInfo<void> page = PageInfo<void>(name);
+  static const PageInfo<MessagingRouteArgs> page =
+      PageInfo<MessagingRouteArgs>(name);
+}
+
+class MessagingRouteArgs {
+  const MessagingRouteArgs({
+    required this.id,
+    required this.name,
+    required this.photoUrl,
+    this.key,
+  });
+
+  final String id;
+
+  final String name;
+
+  final String photoUrl;
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'MessagingRouteArgs{id: $id, name: $name, photoUrl: $photoUrl, key: $key}';
+  }
 }
 
 /// generated route for

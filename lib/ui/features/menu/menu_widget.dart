@@ -3,8 +3,8 @@ import 'package:elementary/elementary.dart';
 import 'package:elementary_helper/elementary_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
-import 'package:petsder/ui/features/app_lodaing_error.dart/app_loading_error_widget.dart';
 import 'package:petsder/ui/features/menu/menu_wm.dart';
+import 'package:petsder/ui/features/menu/widgets/find_error_widget.dart';
 import 'package:petsder/ui/features/menu/widgets/pet_card.dart';
 import 'package:petsder/ui/widgets/common/app_loading.dart';
 
@@ -20,7 +20,7 @@ class MenuScreen extends ElementaryWidget<IMenuScreenWidgetModel> {
       ),
       body: EntityStateNotifierBuilder(
           listenableEntityState: wm.petsListinable,
-          errorBuilder: (context, e, pets) => const AppLoadingErrorWidget(),
+          errorBuilder: (context, e, pets) => const FindErrorWidget(),
           loadingBuilder: (context, pets) => const AppLoading(),
           builder: (context, pets) {
             return Center(
