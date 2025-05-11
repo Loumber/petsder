@@ -2,8 +2,9 @@ import 'package:auto_route/auto_route.dart';
 import 'package:elementary/elementary.dart';
 import 'package:elementary_helper/elementary_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_card_swiper/flutter_card_swiper.dart';
+import 'package:petsder/common/utils/extensions/buildcontext_extensions.dart';
 import 'package:petsder/ui/features/menu/menu_wm.dart';
+import 'package:petsder/ui/features/menu/widgets/card_swiper/src/widget/card_swiper.dart';
 import 'package:petsder/ui/features/menu/widgets/find_error_widget.dart';
 import 'package:petsder/ui/features/menu/widgets/pet_card.dart';
 import 'package:petsder/ui/widgets/common/app_loading.dart';
@@ -28,12 +29,14 @@ class MenuScreen extends ElementaryWidget<IMenuScreenWidgetModel> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Flexible(
-                    child: pets != null 
+                    child: pets != null && pets.isNotEmpty
                     ? CardSwiper(
+                      isLoop: false,
                       controller: wm.cardSwiperController,
                       cardsCount: pets.length,
                       onSwipe: wm.onSwipe,
                       onUndo: wm.onUndo,
+                      onEndWidget: const Text('Поблизости больше никого нет'),
                       cardBuilder: (
                         context,
                         index,
@@ -52,7 +55,12 @@ class MenuScreen extends ElementaryWidget<IMenuScreenWidgetModel> {
                         );
                       }
                     )
-                    :  const Text('Поблизости никого нет'),
+                    : Text(
+                      'Поблизости никого нет',
+                      style: TextStyle(
+                        color: context.theme.main.inputFieldLabelColor
+                      ),
+                    ),
                   )
                 ],
               ),

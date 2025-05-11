@@ -29,7 +29,7 @@ abstract interface class IEditPetWidgetModel implements IWidgetModel {
 }
 
 EditPetWidgetModel defaultEditPetWidgetModelFactory(BuildContext context) {
-  return EditPetWidgetModel(EditPetModel(context.user.userController, context.user.petRepository, context.global.overlayBloc));
+  return EditPetWidgetModel(EditPetModel(context.user.petRepository, context.global.overlayBloc));
 }
 
 class EditPetWidgetModel extends WidgetModel<EditPetScreen, IEditPetModel> implements IEditPetWidgetModel {
@@ -54,18 +54,22 @@ class EditPetWidgetModel extends WidgetModel<EditPetScreen, IEditPetModel> imple
 
   @override
   void onPhotosEditTap() {
-    // TODO: implement onPhotosEditTap
+    
   }
 
   Future<void> onNameSaveTap() async {
     try{
-      await model.editName(editNameController.text);
-      // ignore: use_build_context_synchronously
-      context.router.maybePop();
-
       _currentPetEntity.loading();
       
-      final res = model.getCurrentPet();
+      await model.editName(editNameController.text);
+      // ignore: use_build_context_synchronously
+      await context.router.maybePop();
+      
+      // ignore: use_build_context_synchronously
+      await context.user.updateCurrentPet();
+
+      // ignore: use_build_context_synchronously
+      final res = context.user.userController.currentPetNotifier.value;
 
       _currentPetEntity.content(res);
     } on Object {
@@ -99,7 +103,7 @@ class EditPetWidgetModel extends WidgetModel<EditPetScreen, IEditPetModel> imple
     try {
       _currentPetEntity.loading();
       
-      final res = model.getCurrentPet();
+      final res = context.user.userController.currentPetNotifier.value;
 
       _currentPetEntity.content(res);
 

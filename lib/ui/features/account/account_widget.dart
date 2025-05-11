@@ -80,6 +80,7 @@ class AccountScreen extends ElementaryWidget<IAccountWidgetModel> {
                       child: Padding(
                         padding: const EdgeInsets.all(8),
                         child: Settigs(
+                          changeEmail: wm.onChangeEmailTap,
                           changePassword: wm.onChangePasswordTap,
                           signOut: wm.onSignOutTap,
                         ),

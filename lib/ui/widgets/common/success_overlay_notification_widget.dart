@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:petsder/common/utils/extensions/buildcontext_extensions.dart';
 
 class SuccessOverlayNotificationWidget extends StatefulWidget {
   const SuccessOverlayNotificationWidget({
@@ -75,7 +76,7 @@ class _SuccessOverlayNotificationWidgetState extends State<SuccessOverlayNotific
               ),
               padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 22),
               decoration: BoxDecoration(
-                color:  const Color(0xFF0078AE),
+                color:  context.theme.main.primary,
                 borderRadius: BorderRadius.circular(10),
               ),
               child:  Row(
@@ -84,14 +85,15 @@ class _SuccessOverlayNotificationWidgetState extends State<SuccessOverlayNotific
                   Flexible(
                     child: Text(
                       widget.notificationSuccessText,
-                      //style:  context.theme.c3.copyWith(color: context.theme.main.primaryButtonTextColor),
+                      style: TextStyle(
+                        color: context.theme.main.onPrimary,
+                      ) 
                     ),
                   ),
                   if (widget.isShowSmile)
                   RichText(
                     text: TextSpan(
                       text: widget.emoji,
-                      //style: context.theme.h4,
                     ),
                   ),
                 ],

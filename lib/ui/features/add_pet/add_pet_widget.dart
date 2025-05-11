@@ -132,7 +132,12 @@ class AddPetScreen extends ElementaryWidget<IAddPetWidgetModel> {
                                   dropdownColor: wm.theme.main.inputFieldBackgroundColor,
                                   borderRadius: BorderRadius.circular(16),
                                   value: gender,
-                                  hint: const Text('Выберите пол'),
+                                  hint:  Text(
+                                    'Выберите пол',
+                                    style: TextStyle(
+                                      color: wm.theme.main.inputFieldLabelColor
+                                    ),
+                                  ),
                                   items: const [
                                     DropdownMenuItem(
                                       alignment: Alignment.center,

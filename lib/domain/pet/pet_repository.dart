@@ -179,25 +179,29 @@ class PetRepository {
   }
 
   Future<void> editPetName(String name) async {
-    if (FirebaseAuth.instance.currentUser == null) return;
+    final user = FirebaseAuth.instance.currentUser;
+    final pet = _currentPetNotifier.value;
 
-    if (_currentPetNotifier.value == null) return;
-    final pId = _currentPetNotifier.value!.id;
+    if (user == null || pet == null) return;
 
-    final petRef = await FirebaseFirestore.instance.collection('pets').doc(pId);
+    final petRef = FirebaseFirestore.instance.collection('pets').doc(pet.id);
 
     await petRef.update({'name': name});
   }
 
   Future<List<PetResponse>> findPotentialMatches() async {
     final firestore = FirebaseFirestore.instance;
+
     try {
       if (_currentPetNotifier.value == null) return [];
       final currentPet = _currentPetNotifier.value!;
-
       final prefix = currentPet.geohash.substring(0, 5);
 
-      final snapshot = await FirebaseFirestore.instance
+      final likesSnapshot = await firestore.collection('pets').doc(currentPet.id).collection('likes').get();
+
+      final likedPetIds = likesSnapshot.docs.map((doc) => doc.id).toSet();
+
+      final snapshot = await firestore
           .collection('finder')
           .doc(currentPet.type)
           .collection(currentPet.breed)
@@ -209,6 +213,9 @@ class PetRepository {
 
       final petDocs = await Future.wait(snapshot.docs.map((doc) async {
         final petId = doc.id;
+
+        if (likedPetIds.contains(petId)) return null;
+
         final fullPetDoc = await firestore.collection('pets').doc(petId).get();
         if (fullPetDoc.exists) {
           return PetResponse.fromJson(fullPetDoc.data()!);
@@ -218,7 +225,7 @@ class PetRepository {
       }));
 
       return petDocs.whereType<PetResponse>().where((p) => p.ownerId != currentPet.ownerId).toList();
-    } on Object {
+    } catch (e) {
       rethrow;
     }
   }
@@ -231,6 +238,10 @@ class PetRepository {
         'timestamp': FieldValue.serverTimestamp(),
         'fromPetId': fromPetId,
         'displayed': true,
+      });
+
+      await firestore.collection('pets').doc(fromPetId).collection('likes').doc(likedPetId).set({
+        'timestamp': FieldValue.serverTimestamp(),
       });
 
       final mutualLikeDoc = await firestore.collection('likes').doc(fromPetId).collection('from').doc(likedPetId).get();

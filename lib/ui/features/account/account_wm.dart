@@ -8,6 +8,7 @@ import 'package:petsder/common/utils/extensions/widget_model_extensions.dart';
 import 'package:petsder/common/utils/navigation/app_router.dart';
 import 'package:petsder/data/models/pet/pet_response.dart';
 import 'package:petsder/ui/features/account/account_widget.dart';
+import 'package:petsder/ui/features/account/wigets/change_email_bottom_sheet.dart';
 import 'package:petsder/ui/features/account/wigets/change_password_bottom_sheet.dart';
 
 import '../../theme/theme.dart';
@@ -21,6 +22,8 @@ abstract interface class IAccountWidgetModel implements IWidgetModel {
   Future<void> onAddNewPetTap();
 
   Future<void> onSignOutTap();
+
+  Future<void> onChangeEmailTap();
 
   Future<void> onChangePasswordTap();
 
@@ -59,6 +62,8 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
   EntityValueListenable<List<PetResponse>> get petsListenable => _petsEntity;
 
   final _scrollController = ScrollController();
+
+  final TextEditingController changeEmailController = TextEditingController();
 
   final TextEditingController changePasswordController = TextEditingController();
 
@@ -111,12 +116,39 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
     context.router.push(const AuthRoute());
   }
 
-  Future<void> onSaveTap() async {
+  Future<void> onSaveEmailTap() async {
+    try{
+      model.changeEmail(changeEmailController.text);
+      Navigator.pop(context);
+      model.showOverlaySuccessNotification('Почта успешно изменена');
+    } on Object {
+      model.showOverlayNotification(const Text('Не удалось обновить почту'));
+    }
+  }
+
+  Future<void> onSavePasswordTap() async {
     try{
       model.changePassword(changePasswordController.text);
+      Navigator.pop(context);
+      model.showOverlaySuccessNotification('Пароль успешно изменен');
     } on Object {
       model.showOverlayNotification(const Text('Не удалось обновить пароль'));
     }
+  }
+
+  @override
+  Future<void> onChangeEmailTap() async {
+    await showModalBottomSheet<void>(
+      isScrollControlled: true,
+      context: context,
+      backgroundColor: Colors.transparent,
+      builder: (context){
+        return ChangeEmailBottomSheet(
+          controller: changeEmailController,
+          onSaveTap: onSavePasswordTap,
+        );
+      }
+    );
   }
 
   @override
@@ -128,7 +160,7 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
       builder: (context){
         return ChangePasswordBottomSheet(
           controller: changePasswordController,
-          onSaveTap: onSaveTap,
+          onSaveTap: onSavePasswordTap,
         );
       }
     );
@@ -137,5 +169,13 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
   @override 
   Future<void> onEditPetTap() async {
     await context.router.push(const EditPetRoute());
+    // ignore: use_build_context_synchronously
+    await context.user.updateCurrentPet();
+
+    final currentPet = model.getCurrentPet();
+    final res = await model.getPets();
+    
+    _currentPetEntity.value = currentPet;
+    _petsEntity.content(res);
   }
 }

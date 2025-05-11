@@ -20,7 +20,6 @@ class MenuScreenModel extends IMenuScreenModel {
   Future<List<PetResponse>> getPotentioalMatches() async {
     try {
       final res = await _petRepository.findPotentialMatches();
-      res.add(res.first);
       return res;
     } on Object  {
       rethrow;

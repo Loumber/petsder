@@ -5,8 +5,11 @@ class Settigs extends StatelessWidget {
   const Settigs({
     super.key,
     required this.signOut,
-    required this.changePassword
+    required this.changePassword,
+    required this.changeEmail
   });
+
+  final void Function()? changeEmail;
 
   final void Function()? changePassword;
 
@@ -24,6 +27,19 @@ class Settigs extends StatelessWidget {
               topRight: Radius.circular(20),
             ),
             color: context.theme.main.inputFieldBackgroundColor, 
+            onPressed: changeEmail,
+            child:  Text(
+              'Изменить почту',
+              style: TextStyle(color: context.theme.main.inputFieldLabelColor),
+            ),
+          ),
+        ),
+        const SizedBox(height: 2,),
+        SizedBox(
+          width: 375,
+          child: CupertinoButton(
+            borderRadius: const BorderRadius.all(Radius.zero),
+            color: context.theme.main.inputFieldBackgroundColor, 
             onPressed: changePassword,
             child:  Text(
               'Изменить пароль',
@@ -31,7 +47,7 @@ class Settigs extends StatelessWidget {
             ),
           ),
         ),
-        
+        const SizedBox(height: 2,),
         SizedBox(
           width: 375,
           child: CupertinoButton(

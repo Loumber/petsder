@@ -18,7 +18,13 @@ class MessagesWidget extends ElementaryWidget<IMessagesWidgetModel> {
       loadingBuilder: (context, data) => const AppLoading(),
       builder: (context, chats) {
         if (chats == null) return const SizedBox();
-        if (chats.isEmpty) return const Center(child: Text('У Вас нет чатов'));
+        if (chats.isEmpty) {
+          return Center(
+              child: Text(
+            'У Вас нет чатов',
+            style: TextStyle(color: wm.theme.main.inputFieldLabelColor),
+          ));
+        }
         return Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: ListView.builder(
