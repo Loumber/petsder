@@ -149,6 +149,7 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
         );
       }
     );
+    changeEmailController.clear();
   }
 
   @override
@@ -164,6 +165,7 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
         );
       }
     );
+    changePasswordController.clear();
   }
 
   @override 
@@ -174,7 +176,7 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
 
     final currentPet = model.getCurrentPet();
     final res = await model.getPets();
-    
+
     _currentPetEntity.value = currentPet;
     _petsEntity.content(res);
   }

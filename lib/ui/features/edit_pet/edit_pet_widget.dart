@@ -104,7 +104,7 @@ class EditPetScreen extends ElementaryWidget<IEditPetWidgetModel> {
                           ),
                           const SizedBox(width: 16),
                           IconButton(
-                            onPressed: wm.onPhotosEditTap,
+                            onPressed: wm.onBirthdaEditTap,
                             icon: Icon(
                               Icons.edit_outlined,
                               color: context.theme.main.inputFieldLabelColor,
@@ -130,7 +130,7 @@ class EditPetScreen extends ElementaryWidget<IEditPetWidgetModel> {
                           ),
                           const SizedBox(width: 16),
                           IconButton(
-                            onPressed: wm.onPhotosEditTap,
+                            onPressed: wm.onTypeEditTap,
                             icon: Icon(
                               Icons.edit_outlined,
                               color: context.theme.main.inputFieldLabelColor,
@@ -156,7 +156,7 @@ class EditPetScreen extends ElementaryWidget<IEditPetWidgetModel> {
                           ),
                           const SizedBox(width: 16),
                           IconButton(
-                            onPressed: wm.onPhotosEditTap,
+                            onPressed: wm.onBreedEditTap,
                             icon: Icon(
                               Icons.edit_outlined,
                               color: context.theme.main.inputFieldLabelColor,
@@ -182,7 +182,7 @@ class EditPetScreen extends ElementaryWidget<IEditPetWidgetModel> {
                           ),
                           const SizedBox(width: 16),
                           IconButton(
-                            onPressed: wm.onPhotosEditTap,
+                            onPressed: wm.onGenderEditTap,
                             icon: Icon(
                               Icons.edit_outlined,
                               color: context.theme.main.inputFieldLabelColor,
@@ -208,7 +208,7 @@ class EditPetScreen extends ElementaryWidget<IEditPetWidgetModel> {
                           ),
                           const SizedBox(width: 16),
                           IconButton(
-                            onPressed: wm.onPhotosEditTap,
+                            onPressed: wm.onDescriptionEditTap,
                             icon: Icon(
                               Icons.edit_outlined,
                               color: context.theme.main.inputFieldLabelColor,

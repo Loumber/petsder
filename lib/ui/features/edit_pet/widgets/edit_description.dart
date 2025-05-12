@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:petsder/common/utils/extensions/buildcontext_extensions.dart';
 import 'package:petsder/ui/widgets/buttons/app_button.dart';
 
-class ChangeEmailBottomSheet extends StatelessWidget {
-  const ChangeEmailBottomSheet({
+class EditDescriptionBottomSheet extends StatelessWidget {
+  const EditDescriptionBottomSheet({
     required this.controller,
     required this.onSaveTap,
     super.key,
@@ -32,27 +32,27 @@ class ChangeEmailBottomSheet extends StatelessWidget {
             color: context.theme.main.inputFieldBackgroundColor,
             child: SingleChildScrollView(
               padding: const EdgeInsets.all(16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    SizedBox(
-                      height: 75,
-                      child: TextField(
-                        controller: controller,
-                        decoration: InputDecoration(
-                          fillColor: context.theme.main.inputFieldBackgroundColor,
-                          border: const OutlineInputBorder(),
-                          labelText: 'Введите новую почту',
-                        ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    height: 300,
+                    child: TextField(
+                      maxLines: 10,
+                      controller: controller,
+                      decoration: InputDecoration(
+                        fillColor: context.theme.main.inputFieldBackgroundColor,
+                        border: const OutlineInputBorder(),
+                        labelText: 'Введите новое описание для вашего питомца',
                       ),
                     ),
-                    AppButton(
-                      text: 'Сохранить',
-                      onPressed: onSaveTap,
-                    ),
-                  ],
-                ),
-              
+                  ),
+                  AppButton(
+                    text: 'Сохранить',
+                    onPressed: onSaveTap,
+                  ),
+                ],
+              ),
             ),
           ),
         ),

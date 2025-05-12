@@ -71,9 +71,10 @@ class AddPetScreen extends ElementaryWidget<IAddPetWidgetModel> {
                               controller: wm.typeController,
                               itemBuilder: (context, animal) {
                                 return ListTile(
+                                  tileColor: wm.theme.main.inputFieldBackgroundColor,
                                   title: Text(
                                     animal.type,
-                                    style: const TextStyle(color: Colors.black),
+                                    style: TextStyle(color: wm.theme.main.inputFieldLabelColor),
                                   ),
                                 );
                               },

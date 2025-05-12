@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:petsder/common/utils/di/scopes/global/global_scope.dart';
+import 'package:petsder/data/models/editable_photo/editable_photo.dart';
 import 'package:petsder/data/models/pet/pet_response.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -179,14 +180,186 @@ class PetRepository {
   }
 
   Future<void> editPetName(String name) async {
-    final user = FirebaseAuth.instance.currentUser;
-    final pet = _currentPetNotifier.value;
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      final pet = _currentPetNotifier.value;
 
-    if (user == null || pet == null) return;
+      if (user == null || pet == null) return;
 
-    final petRef = FirebaseFirestore.instance.collection('pets').doc(pet.id);
+      final petRef = FirebaseFirestore.instance.collection('pets').doc(pet.id);
 
-    await petRef.update({'name': name});
+      await petRef.update({'name': name});
+    } on Object {
+      rethrow;
+    }
+  }
+
+  Future<void> editBirth(String birth) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      final pet = _currentPetNotifier.value;
+
+      if (user == null || pet == null) return;
+
+      final petRef = FirebaseFirestore.instance.collection('pets').doc(pet.id);
+
+      await petRef.update({'age': birth});
+    } on Object {
+      rethrow;
+    }
+  }
+
+  Future<void> editPetType({
+    required String petId,
+    required String oldType,
+    required String oldBreed,
+    required String gender,
+    required String newType,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+
+    final oldDocRef =
+        firestore.collection('finder').doc(oldType).collection(oldBreed).doc(gender).collection('pets').doc(petId);
+
+    final oldSnapshot = await oldDocRef.get();
+    if (!oldSnapshot.exists) return;
+
+    final oldData = oldSnapshot.data();
+    if (oldData == null) return;
+
+    final newDocRef =
+        firestore.collection('finder').doc(newType).collection(oldBreed).doc(gender).collection('pets').doc(petId);
+
+    await newDocRef.set(oldData);
+
+    await oldDocRef.delete();
+
+    await firestore.collection('pets').doc(petId).update({
+      'type': newType,
+    });
+  }
+
+  Future<void> editPetGender({
+    required String petId,
+    required String type,
+    required String oldBreed,
+    required String oldGender,
+    required String newGender,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+
+    final oldDocRef =
+        firestore.collection('finder').doc(type).collection(oldBreed).doc(oldGender).collection('pets').doc(petId);
+
+    final oldSnapshot = await oldDocRef.get();
+    if (!oldSnapshot.exists) return;
+
+    final oldData = oldSnapshot.data();
+    if (oldData == null) return;
+
+    final newDocRef =
+        firestore.collection('finder').doc(type).collection(oldBreed).doc(newGender).collection('pets').doc(petId);
+
+    await newDocRef.set(oldData);
+
+    await oldDocRef.delete();
+
+    await firestore.collection('pets').doc(petId).update({
+      'gender': newGender,
+    });
+  }
+
+  Future<void> editPetBreed({
+    required String petId,
+    required String type,
+    required String oldBreed,
+    required String newBreed,
+    required String gender,
+  }) async {
+    final firestore = FirebaseFirestore.instance;
+
+    final oldDocRef =
+        firestore.collection('finder').doc(type).collection(oldBreed).doc(gender).collection('pets').doc(petId);
+
+    final oldSnapshot = await oldDocRef.get();
+    if (!oldSnapshot.exists) return;
+
+    final oldData = oldSnapshot.data();
+    if (oldData == null) return;
+
+    final newDocRef =
+        firestore.collection('finder').doc(type).collection(newBreed).doc(gender).collection('pets').doc(petId);
+
+    await newDocRef.set(oldData);
+
+    await oldDocRef.delete();
+
+    await firestore.collection('pets').doc(petId).update({
+      'breed': newBreed,
+    });
+  }
+
+  Future<void> updatePetPhotos({
+    required String petId,
+    required List<EditablePhoto?> updatedPhotos,
+  }) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      if (user == null) return;
+
+      final supabase = Supabase.instance.client;
+      final uid = user.uid;
+      final path = 'users/$uid/pets/$petId/';
+
+      final existingFiles = await supabase.storage.from('images').list(path: path);
+      final existingUrls =
+          existingFiles.map((f) => supabase.storage.from('images').getPublicUrl('$path${f.name}')).toList();
+
+      final updatedUrls = updatedPhotos.where((photo) => photo?.url != null).map((photo) => photo!.url!).toList();
+
+      final toDelete = existingUrls.where((url) => !updatedUrls.contains(url)).toList();
+      for (final url in toDelete) {
+        final filename = url.split('/').last;
+        await supabase.storage.from('images').remove(['$path$filename']);
+      }
+
+      final List<String> finalUrls = [...updatedUrls];
+      final timestamp = DateTime.now().millisecondsSinceEpoch;
+
+      for (final photo in updatedPhotos) {
+        if (photo?.file != null) {
+          final file = File(photo!.file!.path);
+          final filename = '${timestamp}_${photo.hashCode}';
+          final fullPath = '$path$filename';
+
+          await supabase.storage.from('images').upload(fullPath, file);
+
+          final publicUrl = supabase.storage.from('images').getPublicUrl(fullPath);
+          finalUrls.add(publicUrl);
+        }
+      }
+
+      await FirebaseFirestore.instance.collection('pets').doc(petId).update({
+        'photos': finalUrls,
+      });
+    } on Object {
+      rethrow;
+    }
+  } 
+
+  Future<void> editDescriptionName(String description) async {
+    try {
+      final user = FirebaseAuth.instance.currentUser;
+      final pet = _currentPetNotifier.value;
+
+      if (user == null || pet == null) return;
+
+      final petRef = FirebaseFirestore.instance.collection('pets').doc(pet.id);
+
+      await petRef.update({'description': description});
+    } on Object {
+      rethrow;
+    }
   }
 
   Future<List<PetResponse>> findPotentialMatches() async {
