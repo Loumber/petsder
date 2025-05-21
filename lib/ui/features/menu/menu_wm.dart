@@ -59,6 +59,7 @@ class MenuScreenWidgetModel extends WidgetModel<MenuScreen, IMenuScreenModel>
   void initWidgetModel() {
     _initAsync();
 
+    context.user.userController.radiusOfSearchAreaNotifier.addListener(_findPotentioalMatches);
     super.initWidgetModel();
   }
 
@@ -66,11 +67,23 @@ class MenuScreenWidgetModel extends WidgetModel<MenuScreen, IMenuScreenModel>
     try {
       _petsEntity.loading();
       
-      final res = await model.getPotentioalMatches();
+      final res = await model.getPotentioalMatches(context.user.userController.radiusOfSearchAreaNotifier.value);
 
       _petsEntity.content(res);
 
 
+    } on Object {
+      _petsEntity.error();
+    }
+  }
+
+  Future<void> _findPotentioalMatches() async {
+    try{
+      _petsEntity.loading();
+      
+      final res = await model.getPotentioalMatches(context.user.userController.radiusOfSearchAreaNotifier.value);
+
+      _petsEntity.content(res);
     } on Object {
       _petsEntity.error();
     }

@@ -47,7 +47,10 @@ class UserInfoDependency extends AppAsyncDependency {
     // ignore: use_build_context_synchronously
     await petRepository.setGeoHashForCurrentPet(context.global.geolocationRepository.getGeoHash(await context.global.geolocationRepository.getCurrentPosition()));
     await petRepository.getCurrentPet();
-    userController = UserController(currentPetNotifier:  petRepository.currentPetNotifier);
+    userController = UserController(
+      currentPetNotifier:  petRepository.currentPetNotifier, 
+      radiusOfSearchAreaNotifier: ValueNotifier(4),      
+    );
   }
   
   @override

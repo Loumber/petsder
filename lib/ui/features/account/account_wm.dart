@@ -19,6 +19,8 @@ abstract interface class IAccountWidgetModel implements IWidgetModel {
 
   ValueNotifier<PetResponse?> get currentPetListinable;
 
+  ValueNotifier<double> get searchAreaListinable;
+
   Future<void> onAddNewPetTap();
 
   Future<void> onSignOutTap();
@@ -56,6 +58,12 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
   @override
   ValueNotifier<PetResponse?> get currentPetListinable => _currentPetEntity;
 
+
+  late final _searchAreaEntity;
+
+  @override
+  ValueNotifier<double> get searchAreaListinable => _searchAreaEntity;
+
   final _petsEntity = EntityStateNotifier<List<PetResponse>>();
 
   @override
@@ -72,6 +80,9 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
 
   @override
   void initWidgetModel() {
+
+    _searchAreaEntity = context.user.userController.radiusOfSearchAreaNotifier;
+
     _initAsync();
 
     super.initWidgetModel();

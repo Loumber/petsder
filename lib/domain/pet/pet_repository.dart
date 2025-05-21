@@ -345,7 +345,7 @@ class PetRepository {
     } on Object {
       rethrow;
     }
-  } 
+  }
 
   Future<void> editDescriptionName(String description) async {
     try {
@@ -362,13 +362,13 @@ class PetRepository {
     }
   }
 
-  Future<List<PetResponse>> findPotentialMatches() async {
+  Future<List<PetResponse>> findPotentialMatches(double areasRadius) async {
     final firestore = FirebaseFirestore.instance;
 
     try {
       if (_currentPetNotifier.value == null) return [];
       final currentPet = _currentPetNotifier.value!;
-      final prefix = currentPet.geohash.substring(0, 5);
+      final prefix = currentPet.geohash.substring(0, areasRadius.round());
 
       final likesSnapshot = await firestore.collection('pets').doc(currentPet.id).collection('likes').get();
 

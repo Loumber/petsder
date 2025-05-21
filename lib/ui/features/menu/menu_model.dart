@@ -3,7 +3,7 @@ import 'package:petsder/data/models/pet/pet_response.dart';
 import 'package:petsder/domain/pet/pet_repository.dart';
 abstract interface class IMenuScreenModel extends ElementaryModel{
 
-  Future<List<PetResponse>> getPotentioalMatches();
+  Future<List<PetResponse>> getPotentioalMatches(double areaRadius);
 
   Future<void> likePet(String likedPetId, String fromPetId);
 
@@ -17,9 +17,9 @@ class MenuScreenModel extends IMenuScreenModel {
   final PetRepository _petRepository;
 
   @override
-  Future<List<PetResponse>> getPotentioalMatches() async {
+  Future<List<PetResponse>> getPotentioalMatches(double areaRadius) async {
     try {
-      final res = await _petRepository.findPotentialMatches();
+      final res = await _petRepository.findPotentialMatches(areaRadius);
       return res;
     } on Object  {
       rethrow;

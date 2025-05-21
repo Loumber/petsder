@@ -58,38 +58,42 @@ class AccountScreen extends ElementaryWidget<IAccountWidgetModel> {
                       ),
                     ),
                     SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.only(
-                          top: 8,
-                          left: 30,
-                          right: 24,
-                          bottom: 16,
+                        child: Padding(
+                      padding: const EdgeInsets.only(
+                        top: 8,
+                        left: 30,
+                        right: 24,
+                        bottom: 16,
+                      ),
+                      child: GestureDetector(
+                        onTap: wm.onEditPetTap,
+                        child: PetCard(
+                          name: currnetPet!.name,
+                          petPhotos: currnetPet.photos,
+                          discription: currnetPet.description,
+                          age: currnetPet.age,
                         ),
-                        child: GestureDetector(
-                          onTap: wm.onEditPetTap,
-                          child: PetCard(
-                            name: currnetPet!.name,
-                            petPhotos: currnetPet.photos,
-                            discription: currnetPet.description,
-                            age: currnetPet.age,
-                          ),
-                        ),
-                      )
-                    ),
+                      ),
+                    )),
                     SliverToBoxAdapter(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Settigs(
-                          changeEmail: wm.onChangeEmailTap,
-                          changePassword: wm.onChangePasswordTap,
-                          signOut: wm.onSignOutTap,
-                        ),
-                      )
+                      child: ValueListenableBuilder(
+                        valueListenable: wm.searchAreaListinable,
+                        builder: (context, value, child) {
+                          return Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Settigs(
+                              sliderValueNotifier: wm.searchAreaListinable,
+                              changeEmail: wm.onChangeEmailTap,
+                              changePassword: wm.onChangePasswordTap,
+                              signOut: wm.onSignOutTap,
+                            ),
+                          );
+                        }, 
+                      ),
                     )
                   ],
                 );
-              }
-            );
+              });
         },
       )),
     );

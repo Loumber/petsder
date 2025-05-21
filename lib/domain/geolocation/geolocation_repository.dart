@@ -38,7 +38,7 @@ class GeolocationRepository {
     if(position == null) return '';
     final geoHasher = GeoHasher();
 
-    final geoHash = geoHasher.encode(position.longitude, position.latitude, precision: 5);
+    final geoHash = geoHasher.encode(position.longitude, position.latitude, precision: 12);
 
     return geoHash;
   }
