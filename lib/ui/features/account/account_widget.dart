@@ -6,6 +6,7 @@ import 'package:petsder/ui/features/account/wigets/add_new_pet.dart';
 import 'package:petsder/ui/features/account/wigets/pet_card.dart';
 import 'package:petsder/ui/features/account/wigets/pet_item.dart';
 import 'package:petsder/ui/features/account/wigets/settings.dart';
+import 'package:petsder/ui/widgets/common/app_loading.dart';
 
 import 'account_wm.dart';
 
@@ -24,6 +25,7 @@ class AccountScreen extends ElementaryWidget<IAccountWidgetModel> {
           return ValueListenableBuilder(
               valueListenable: wm.currentPetListinable,
               builder: (context, currnetPet, _) {
+                if(currnetPet == null) return const AppLoading();
                 return CustomScrollView(
                   controller: wm.scrollController,
                   physics: const ClampingScrollPhysics(),
@@ -47,10 +49,13 @@ class AccountScreen extends ElementaryWidget<IAccountWidgetModel> {
                                 }
                                 return Padding(
                                   padding: const EdgeInsets.all(8.0),
-                                  child: PetItem(
-                                    isSelected: wm.isCurrent(index),
-                                    petName: pets[index].name,
-                                    petPhoto: pets[index].photos.isNotEmpty ? pets[index].photos.first : '',
+                                  child: GestureDetector(
+                                    onTap: () => wm.onAnotherPetTap(pets[index].id),
+                                    child: PetItem(
+                                      isSelected: wm.isCurrent(index),
+                                      petName: pets[index].name,
+                                      petPhoto: pets[index].photos.isNotEmpty ? pets[index].photos.first : '',
+                                    ),
                                   ),
                                 );
                               }),
@@ -68,7 +73,7 @@ class AccountScreen extends ElementaryWidget<IAccountWidgetModel> {
                       child: GestureDetector(
                         onTap: wm.onEditPetTap,
                         child: PetCard(
-                          name: currnetPet!.name,
+                          name: currnetPet.name,
                           petPhotos: currnetPet.photos,
                           discription: currnetPet.description,
                           age: currnetPet.age,

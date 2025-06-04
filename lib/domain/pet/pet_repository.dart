@@ -15,6 +15,20 @@ class PetRepository {
 
   ValueNotifier<PetResponse?> get currentPetNotifier => _currentPetNotifier;
 
+  Future<void> changeCurrentPet(String id) async {
+    try {
+      if (FirebaseAuth.instance.currentUser == null) return;
+    final user = FirebaseAuth.instance.currentUser!.uid;
+      final firestore = FirebaseFirestore.instance;
+      await firestore.collection('users').doc(user).update({
+      'pets': FieldValue.arrayUnion([id]),
+      'currentPet': id,
+    });
+    } on Object {
+      rethrow;
+    }
+  }
+
   Future<void> uploadPhotos(String petId, List<XFile?> photos) async {
     if (FirebaseAuth.instance.currentUser == null) return;
     final user = FirebaseAuth.instance.currentUser!.uid;

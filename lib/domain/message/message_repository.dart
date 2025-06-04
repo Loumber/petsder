@@ -80,7 +80,8 @@ class MessageRepository {
     }
 
     final fromPublicKey = RSAPublicKey.fromPEM(fromPublicKeyPem);
-    final toPublicKey = RSAPublicKey.fromPEM(fromPublicKeyPem);
+    final toPublicKey = RSAPublicKey.fromPEM(toPublicKeyPem);
+    
 
     final encryptedForSender = fromPublicKey.encrypt(text);
     final encryptedForReceiver = toPublicKey.encrypt(text);

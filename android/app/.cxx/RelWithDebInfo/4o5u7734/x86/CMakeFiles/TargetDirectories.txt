@@ -1,0 +1,2 @@
+C:/Users/maxim/git/petsder/android/app/.cxx/RelWithDebInfo/4o5u7734/x86/CMakeFiles/edit_cache.dir
+C:/Users/maxim/git/petsder/android/app/.cxx/RelWithDebInfo/4o5u7734/x86/CMakeFiles/rebuild_cache.dir

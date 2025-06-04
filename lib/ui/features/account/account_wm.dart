@@ -21,6 +21,8 @@ abstract interface class IAccountWidgetModel implements IWidgetModel {
 
   ValueNotifier<double> get searchAreaListinable;
 
+  Future<void> onAnotherPetTap(String petId);
+
   Future<void> onAddNewPetTap();
 
   Future<void> onSignOutTap();
@@ -53,12 +55,13 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
   @override
   AppThemeData get theme => wmTheme;
 
-  final _currentPetEntity = ValueNotifier<PetResponse?>(null);
+  late final ValueNotifier<PetResponse?> _currentPetEntity;
 
   @override
   ValueNotifier<PetResponse?> get currentPetListinable => _currentPetEntity;
 
 
+  // ignore: prefer_typing_uninitialized_variables
   late final _searchAreaEntity;
 
   @override
@@ -83,9 +86,24 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
 
     _searchAreaEntity = context.user.userController.radiusOfSearchAreaNotifier;
 
+    _currentPetEntity = context.user.userController.currentPetNotifier;
+
     _initAsync();
 
     super.initWidgetModel();
+  }
+
+  @override
+  Future<void> onAnotherPetTap(String petId)async {
+    try {
+      if(_currentPetEntity.value != null && petId == _currentPetEntity.value!.id) return;
+      await   model.changeCurrentPet(petId);
+      // ignore: use_build_context_synchronously
+      context.user.updateCurrentPet();
+    } on Exception {
+      _petsEntity.error();
+    }
+
   }
 
   Future<void> _initAsync() async {
@@ -94,13 +112,7 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
       
       final res = await model.getPets();
 
-      final currentPet = model.getCurrentPet();
-
-      _currentPetEntity.value = currentPet;
-
       _petsEntity.content(res);
-
-
     } on Exception {
       _petsEntity.error();
     }
@@ -122,9 +134,8 @@ class AccountWidgetModel extends WidgetModel<AccountScreen, IAccountModel> imple
 
   @override
   Future<void> onSignOutTap() async {
-    await model.signOut();
-    // ignore: use_build_context_synchronously
     context.router.push(const AuthRoute());
+    await model.signOut();    
   }
 
   Future<void> onSaveEmailTap() async {

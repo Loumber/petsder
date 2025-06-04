@@ -11,6 +11,8 @@ import 'package:petsder/domain/user/user_controller.dart';
 abstract interface class IAccountModel extends ElementaryModel {
   Future<List<PetResponse>> getPets();
 
+  Future<void> changeCurrentPet(String id);
+
   Future<void> changeEmail(String newEmail);
 
   Future<void> changePassword(String newPassword);
@@ -40,6 +42,15 @@ class AccountModel extends IAccountModel {
       return res;
     } on Object catch (e, stackTrace) {
       Error.throwWithStackTrace(e, stackTrace);
+    }
+  }
+
+  @override
+  Future<void> changeCurrentPet(String id) async {
+    try {
+      await _petRepository.changeCurrentPet(id);
+    } on Object {
+      rethrow;
     }
   }
 
