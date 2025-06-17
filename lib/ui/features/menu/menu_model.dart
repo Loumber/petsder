@@ -19,8 +19,7 @@ class MenuScreenModel extends IMenuScreenModel {
   @override
   Future<List<PetResponse>> getPotentioalMatches(double areaRadius) async {
     try {
-      final res = await _petRepository.findPotentialMatches(areaRadius);
-      return res;
+      return await _petRepository.findPotentialMatches(areaRadius);
     } on Object  {
       rethrow;
     }

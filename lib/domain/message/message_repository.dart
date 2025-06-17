@@ -8,7 +8,7 @@ class MessageRepository {
   Future<List<ChatsResponseWithPetInfo>> getChatsForPet(String petId) async {
     final firestore = FirebaseFirestore.instance;
 
-    final querySnapshot =
+    final chatsSnapshot =
         await firestore.collection('pets').doc(petId).collection('chats').orderBy('createdAt', descending: true).get();
 
     final petDoc = await firestore.collection('pets').doc(petId).get();
@@ -23,7 +23,7 @@ class MessageRepository {
 
     final List<ChatsResponseWithPetInfo> results = [];
 
-    for (final doc in querySnapshot.docs) {
+    for (final doc in chatsSnapshot.docs) {
       final chat = ChatsResponse.fromJson(doc.data());
 
       final encrypText = chat.lastMessage;
