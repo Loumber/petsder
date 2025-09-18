@@ -63,7 +63,6 @@ class MessageRepository {
     final chatRef = firestore.collection('chats').doc(chatId);
     final messageRef = chatRef.collection('messages').doc();
     final timestamp = FieldValue.serverTimestamp();
-
     final chatSnapshot = await chatRef.get();
     final participants = (chatSnapshot.data()?['participants'] as List).cast<String>();
 

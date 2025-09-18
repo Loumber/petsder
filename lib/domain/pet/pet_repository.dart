@@ -197,11 +197,10 @@ class PetRepository {
     try {
       final user = FirebaseAuth.instance.currentUser;
       final pet = _currentPetNotifier.value;
-
       if (user == null || pet == null) return;
-
-      final petRef = FirebaseFirestore.instance.collection('pets').doc(pet.id);
-
+      final petRef = FirebaseFirestore
+        .instance.collection('pets')
+        .doc(pet.id);
       await petRef.update({'name': name});
     } on Object {
       rethrow;
